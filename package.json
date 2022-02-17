@@ -29,6 +29,7 @@
   },
   "type": "module",
   "dependencies": {
+    "invertly": "^1.0.0",
     "nodeviz": "../nodeviz/package"
   }
 }

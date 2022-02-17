@@ -1,6 +1,6 @@
 <script>
-    import {helloWorld} from 'nodeviz';
+    import {getWidgetInfo} from '../nodeviz/widgets/page/WidgetInfo';
+    const RenderComp = getWidgetInfo().desktop.renderer
 </script>
 
-<h1>Welcome to SvelteKit ({helloWorld})</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<svelte:component this={RenderComp}/>
