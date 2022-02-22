@@ -1,7 +1,7 @@
 import { widgets } from ".";
-import type { Widget } from "./Widget";
+import type { Widget, WidgetInfo } from "./Widget";
 
-const registry = new Map<string, Widget>();
+const registry = new Map<string, WidgetInfo>();
 let initDone = false;
 
 const initRegistry = () => {
@@ -20,7 +20,7 @@ const initRegistry = () => {
     })
 }
 
-export const getWidget = async (type:string) => {
+export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
     if (!initDone) {
         await initRegistry();
     }
