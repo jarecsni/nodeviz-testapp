@@ -8,9 +8,8 @@
 {#if (widgetPromise !== undefined)}
     {#await widgetPromise}
         <p></p>
-    {:then widget} 
-        <!-- <svelte:component this={widget}/> -->
-        <p>{JSON.stringify(widget)}</p>
+    {:then widget}
+        <svelte:component this={new widget.desktop.renderer({target: document.body})}/>
     {/await}
 {:else}
     <p>Could not retrieve the widget for the type '{node.type}'</p>
