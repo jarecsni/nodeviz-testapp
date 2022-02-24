@@ -5,7 +5,7 @@
     import type { Node } from "src/nodeviz/Nodes";
 
     const node:Node = {
-        type: 'page',
+        type: 'pagex',
         value: { some: 'value' }
     }
 </script>
