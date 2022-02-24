@@ -1,15 +1,16 @@
 <script type="typescript">
-    import type { Node } from './Nodes';
+    import type {Node} from './Nodes';
     import {getWidget} from '../nodeviz/widgets/WidgetRegistry';
 
     export let node:Node;
     const widgetPromise = getWidget(node.type);
 </script>
+
 {#if (widgetPromise !== undefined)}
     {#await widgetPromise}
-        <p></p>
+        <!-- svelte-ignore -->
     {:then widget}
-        <svelte:component this={new widget.desktop.renderer({target: document.body})}/>
+        <svelte:component this={widget.desktop.renderer}/>
     {/await}
 {:else}
     <p>Could not retrieve the widget for the type '{node.type}'</p>

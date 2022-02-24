@@ -10,7 +10,4 @@
     }
 </script>
 
-<!-- <svelte:component this={RenderComp}/> -->
-
-Yo
 <GenericComponent {node}/>
