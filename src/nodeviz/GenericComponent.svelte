@@ -6,9 +6,7 @@
     const widgetPromise = getWidget(node.type);
 </script>
 
-{#await widgetPromise}
-    <!-- svelte-ignore -->
-{:then widget}
+{#await widgetPromise then widget}
     {#if widget === undefined} 
         <p>Could not retrieve the widget for the type '{node.type}'</p>
     {:else}
