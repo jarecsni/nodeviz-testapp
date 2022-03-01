@@ -1,4 +1,10 @@
 <script type="ts">
-    export let value:unknown;
+    export let value:{content:()=>Promise<{default:string}>};
 </script>
-<div>Page {JSON.stringify(value)}</div>
+{#await value.content() then pageContent}
+    {#if pageContent === undefined} 
+        <p>No content.</p>
+    {:else}
+        {@html pageContent.default}
+    {/if}
+{/await}
