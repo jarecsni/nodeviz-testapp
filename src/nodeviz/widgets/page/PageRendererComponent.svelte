@@ -1,8 +1,11 @@
 <script type="ts">
+	import type { Node } from './../../Nodes';
     import type { SvelteComponent } from "svelte";
 
-    export let value:{pageComponent:()=>Promise<SvelteComponent>};
-    const pageComponentPromise = value.pageComponent();
+    export let node:Node;
+    //FIXME how to solve this typing problem?
+    //@ts-ignore
+    const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
 </script>
 
 {#await pageComponentPromise then pageComponent}

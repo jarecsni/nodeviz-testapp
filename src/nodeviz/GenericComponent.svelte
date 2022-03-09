@@ -10,6 +10,6 @@
     {#if widget === undefined} 
         <p>Could not retrieve the widget for the type '{node.type}'</p>
     {:else}
-        <svelte:component this={widget.desktop.renderer} value={node.value}/>
+        <svelte:component this={widget.desktop.renderer} {node}/>
     {/if}
 {/await}
