@@ -8,36 +8,42 @@
     const node:Node = {
         type: 'page',
         value: { 
+            title: 'Home',
             pageComponent: () => loadPageComponent('HomePage') 
         },
         children: [
             {
                 type: 'page',
                 value: {
+                    title: 'News',
                     pageComponent: () => loadPageComponent('News')
                 }
             },
             {
                 type: 'page',
                 value: {
+                    title: 'About',
                     pageComponent: () => loadPageComponent('AboutUs')
                 }
             },
             {
                 type: 'page',
                 value: {
+                    title: 'Jobs',
                     pageComponent: () => loadPageComponent('Jobs')
                 },
                 children: [
                     {
                         type: 'page',
                         value: {
+                            title: 'Contract Positions',
                             pageComponent: () => loadPageComponent('ContractJobs')
                         }
                     },
                     {
                         type: 'page',
                         value: {
+                            title: 'Permanent Jobs',
                             pageComponent: () => loadPageComponent('Employment')
                         }
                     },      
