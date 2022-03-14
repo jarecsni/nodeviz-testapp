@@ -1,16 +1,17 @@
 <script type="ts">
 	import type { Node } from './../../Nodes';
     import type { SvelteComponent } from "svelte";
-import { validate_each_argument } from 'svelte/internal';
+    import type { Context } from 'src/nodeviz/Context';
 
     export let node:Node;
+    export let context:Context;
     //FIXME how to solve this typing problem?
     //@ts-ignore
     const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
-    const childPages = node.children;
+    const childPages = node.children || [];
 
     function navigateToPage(page) {
-        console.log('navigating to', page);
+        context.navigateTo(page);
     }
 </script>
 
