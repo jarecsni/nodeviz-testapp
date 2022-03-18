@@ -1,10 +1,12 @@
-export type Node = {
+export type NodeObj = {
+    name: string,
     type: string,
     value: unknown,
-    children?: Node[]
+    children?: NodeObj[]
 }
 
-const t:Node = {
+const t:NodeObj = {
+    name: 'question_a',
     type: 'simpleQuestion',
     value: {
         question: 'Some question',

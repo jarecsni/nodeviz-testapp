@@ -19,14 +19,22 @@
     {#if pageComponent === undefined} 
         <p>no page component loaded</p>
     {:else}
-        <div>
-            <ul class="pageLinks">
-                {#each childPages as childPage}
-                    <li class="pageLink"><a href={'#'}  
-                        on:click={()=>navigateToPage(childPage)}>{childPage.value.title}</a></li>
-                {/each}
-            </ul>
-        </div>
+        {#if !!node.parent}
+            <div>
+                <a href={'#'} on:click={()=>navigateToPage(node.parent)}>
+                    {node.parent.value.title}
+                </a>
+            </div>
+        {:else}
+            <div>
+                <ul class="pageLinks">
+                    {#each childPages as childPage}
+                        <li class="pageLink"><a href={'#'}  
+                            on:click={()=>navigateToPage(childPage)}>{childPage.value.title}</a></li>
+                    {/each}
+                </ul>
+            </div>
+        {/if}
         <svelte:component this={pageComponent.default}/>
     {/if}
 {/await}

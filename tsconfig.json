@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"types": ["node", "svelte"],
+		"types": ["node", "svelte", "jest"],
 		"moduleResolution": "node",
 		"module": "es2020",
 		"lib": ["es2020", "DOM"],
