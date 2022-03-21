@@ -35,10 +35,10 @@ export class Node {
 
 export function convertJSON(json:NodeObj, parentNode?:Node):Node {
     const currentNode = new Node(json.name, json.type);
-    if (json.children.length > 0) {
+    currentNode.parent = parentNode;
+    if (json.children && json.children.length > 0) {
         json.children.forEach(child => {
-            const childNode = convertJSON(child, currentNode);
-            childNode.parent = parentNode;
+            currentNode.addChild(convertJSON(child, currentNode));
         });
     }
     return currentNode;   
