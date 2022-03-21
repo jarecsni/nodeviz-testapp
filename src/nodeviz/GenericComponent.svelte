@@ -1,5 +1,5 @@
 <script type="typescript">
-    import type {Node} from './Nodes';
+    import type {Node} from './Node';
     import {getWidget} from '../nodeviz/widgets/WidgetRegistry';
     import type { Context } from './Context';
 
