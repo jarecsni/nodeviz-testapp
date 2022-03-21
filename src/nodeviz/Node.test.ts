@@ -28,4 +28,25 @@ describe('Node', () => {
         expect(converted.children.length).toBe(1);
         expect(converted.children[0].parent).toBe(converted);
     });
+    it('sets works with nested children', () => {
+        const node:NodeObj = {
+            name: 'node',
+            type: 'someType',
+            value: {},
+            children: [{
+                name: 'childNode',
+                type: 'someOtherType',
+                value: {},
+                children: [
+                    {
+                        name: 'grandChildNode',
+                        type: 'yetAnotherType',
+                        value: {}
+                    }
+                ]
+            }]
+        }
+        const converted = convertJSON(node);
+        expect(converted.children[0].children[0].parent).toBe(converted.children[0]);
+    });
 });
