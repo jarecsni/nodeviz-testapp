@@ -21,7 +21,10 @@ describe('Node', () => {
             children: [{
                 name: 'childNode',
                 type: 'someOtherType',
-                value: {}
+                value: {
+                    someValue: 1,
+                    someFunction: () => (2)
+                }
             }]
         }
         const converted = convertJSON(node);

@@ -1,5 +1,5 @@
 <script type="ts">
-	import type { Node } from './../../Nodes';
+	import type { Node } from './../../Node';
     import type { SvelteComponent } from "svelte";
     import type { Context } from 'src/nodeviz/Context';
 
@@ -22,7 +22,7 @@
         {#if !!node.parent}
             <div>
                 <a href={'#'} on:click={()=>navigateToPage(node.parent)}>
-                    {node.parent.value.title}
+                    {node.parent.value.title} 
                 </a>
             </div>
         {:else}
