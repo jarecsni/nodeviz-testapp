@@ -25,7 +25,8 @@
                     {node.parent.value.title} 
                 </a>
             </div>
-        {:else}
+        {/if}
+        {#if !!node.children}
             <div>
                 <ul class="pageLinks">
                     {#each childPages as childPage}
@@ -53,5 +54,8 @@
     .pageLink {
         display: inline;
         margin: 5px;
+    }
+    ul {
+        padding-inline-start: 0;
     }
 </style>
