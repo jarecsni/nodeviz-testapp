@@ -29,13 +29,19 @@
     renderers. So a lot of interesting insight can be gained from this little exercise.
     */
 
-    let todoName;
+    import { todos } from "./store";
+
+    let todoDescription;
     function addTodo() {
-        console.log('adding', todoName);
-        todoName = null;
+        console.log('adding', todoDescription);
+        todos.set([...$todos, {description: todoDescription}])
+        todoDescription = null;
     }
 </script>
 
-<input type="text" bind:value={todoName}>
-<button on:click={addTodo} disabled={!todoName}>Add</button>
+<input type="text" bind:value={todoDescription}>
+<button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
+{#each $todos as todoItem }
+    <div>{todoItem.description}</div>
+{/each}
