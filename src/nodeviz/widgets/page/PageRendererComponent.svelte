@@ -1,20 +1,3 @@
-<script type="ts">
-	import type { Node } from './../../Node';
-    import type { SvelteComponent } from "svelte";
-    import type { Context } from 'src/nodeviz/Context';
-
-    export let node:Node;
-    export let context:Context;
-    //FIXME how to solve this typing problem?
-    //@ts-ignore
-    const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
-    const childPages = node.children || [];
-
-    function navigateToPage(page) {
-        context.navigateTo(page);
-    }
-</script>
-
 {#await pageComponentPromise then pageComponent}
     {#if pageComponent === undefined} 
         <p>no page component loaded</p>
@@ -39,6 +22,23 @@
         <svelte:component this={pageComponent.default}/>
     {/if}
 {/await}
+
+<script type="ts">
+	import type { Node } from './../../Node';
+    import type { SvelteComponent } from "svelte";
+    import type { Context } from 'src/nodeviz/Context';
+
+    export let node:Node;
+    export let context:Context;
+    //FIXME how to solve this typing problem?
+    //@ts-ignore
+    const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
+    const childPages = node.children || [];
+
+    function navigateToPage(page) {
+        context.navigateTo(page);
+    }
+</script>
 
 <style>
     a {
