@@ -1,12 +1,12 @@
 import type { NodeObj } from "./Nodes";
 
-export class Node {
+export class Node<T> {
     private _name:string;
     private _type:string;
-    private _value:unknown;
-    private _children?:Node[];
-    private _parent?:Node;    
-    constructor(name:string, type:string, value:unknown) {
+    private _value:T;
+    private _children?:Node<T>[];
+    private _parent?:Node<T>;    
+    constructor(name:string, type:string, value:T) {
         this._name = name;
         this._type = type;
         this._value = value;
@@ -26,10 +26,10 @@ export class Node {
     get parent() {
         return this._parent;
     }
-    set parent(parent:Node) {
+    set parent(parent:Node<T>) {
         this._parent = parent;
     }
-    addChild(child:Node) {
+    addChild(child:Node<T>) {
         if (!this._children) {
             this._children = [];
         }
@@ -38,8 +38,8 @@ export class Node {
     }
 }
 
-export function convertJSON(json:NodeObj, parentNode?:Node):Node {
-    const currentNode = new Node(json.name, json.type, json.value);
+export function convertJSON<T>(json:NodeObj, parentNode?:Node<T>):Node<T> {
+    const currentNode = new Node<T>(json.name, json.type, json.value as T);
     currentNode.parent = parentNode;
     if (json.children && json.children.length > 0) {
         json.children.forEach(child => {

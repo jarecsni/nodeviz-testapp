@@ -1,4 +1,7 @@
 <script>
+	import { Node } from '../../nodeviz/Node';
+    import GenericComponent from '../../nodeviz/GenericComponent.svelte';
+    
     /*
     Ideas/questions/design.
 
@@ -34,7 +37,7 @@
     let todoDescription;
     function addTodo() {
         console.log('adding', todoDescription);
-        todos.set([...$todos, {description: todoDescription}])
+        todos.set([...$todos, new Node(todoDescription, 'todo', {description: todoDescription})])
         todoDescription = null;
     }
 </script>
@@ -43,5 +46,5 @@
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
 {#each $todos as todoItem }
-    <div>{todoItem.description}</div>
+    <GenericComponent node={todoItem}/>
 {/each}
