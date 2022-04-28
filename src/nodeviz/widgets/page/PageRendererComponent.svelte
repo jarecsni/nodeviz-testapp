@@ -27,15 +27,15 @@
 	import type { Node } from './../../Node';
     import type { SvelteComponent } from "svelte";
     import type { Context } from 'src/nodeviz/Context';
+    import type { Page } from './types';
 
-    export let node:Node;
+    export let node:Node<Page>;
     export let context:Context;
-    //FIXME how to solve this typing problem?
-    //@ts-ignore
+    //@ts-ignore 
     const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
     const childPages = node.children || [];
 
-    function navigateToPage(page) {
+    function navigateToPage(page:Node<Page>) {
         context.navigateTo(page);
     }
 </script>

@@ -5,6 +5,3 @@
     import type { Todo } from './types';
     export let node:Node<Todo>;
 </script>
-
-<style>
-</style>

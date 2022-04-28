@@ -36,8 +36,8 @@
 
     let todoDescription;
     function addTodo() {
-        console.log('adding', todoDescription);
-        todos.set([...$todos, new Node(todoDescription, 'todo', {description: todoDescription})])
+        todos.set([...$todos, 
+            new Node(todoDescription, 'todo', {description: todoDescription})]);
         todoDescription = null;
     }
 </script>
