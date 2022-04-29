@@ -1,5 +1,6 @@
-import type { Node } from "./Nodes";
+import type { Node } from "./Node";
+import type { Page } from "./widgets/page/types";
 
 export interface Context {
-    navigateTo(node:Node): void;
+    navigateTo(node:Node<Page>): void;
 }

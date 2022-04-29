@@ -1,29 +1,31 @@
-{#await pageComponentPromise then pageComponent}
-    {#if pageComponent === undefined} 
-        <p>no page component loaded</p>
-    {:else}
-        {#if !!node.parent}
-            <div>
-                <a href={'#'} on:click={()=>navigateToPage(node.parent)}>
-                    {node.parent.value.title} 
-                </a>
-            </div>
+{#if !node.value.active}
+    <a href={"#"} on:click={()=>navigateToPage(node)}>{node.value.title}</a>
+{:else}    
+    {#await pageComponentPromise then pageComponent}
+        {#if pageComponent === undefined} 
+            <p>no page component loaded</p>
+        {:else}
+            {#if !!node.parent}
+                <GenericComponent node={node.parent}/>
+            {/if}
+            {#if !!node.children}
+                <div>
+                    <ul class="pageLinks">
+                        {#each childPages as childPage}
+                            <li class="pageLink">
+                                <GenericComponent node={childPage}/>
+                            </li>
+                        {/each}
+                    </ul>
+                </div>
+            {/if}
+            <svelte:component this={pageComponent.default}/>
         {/if}
-        {#if !!node.children}
-            <div>
-                <ul class="pageLinks">
-                    {#each childPages as childPage}
-                        <li class="pageLink"><a href={'#'}  
-                            on:click={()=>navigateToPage(childPage)}>{childPage.value.title}</a></li>
-                    {/each}
-                </ul>
-            </div>
-        {/if}
-        <svelte:component this={pageComponent.default}/>
-    {/if}
-{/await}
+    {/await}
+{/if}
 
 <script type="ts">
+	import GenericComponent from './../../GenericComponent.svelte';
 	import type { Node } from './../../Node';
     import type { SvelteComponent } from "svelte";
     import type { Context } from 'src/nodeviz/Context';

@@ -11,11 +11,11 @@
     import {getWidget} from '../nodeviz/widgets/WidgetRegistry';
     import type { Context } from './Context';
 
-    export let node:Node;
+    export let node:Node<unknown>;
     let widgetPromise = getWidget(node.type);
     
     class ContextImpl implements Context {
-        navigateTo(_node: Node): void {
+        navigateTo(_node: Node<unknown>): void {
             node = _node;
             widgetPromise = getWidget(node.type);
         }

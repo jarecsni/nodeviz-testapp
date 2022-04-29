@@ -46,5 +46,5 @@
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
 {#each $todos as todoItem }
-    <GenericComponent node={todoItem}/>
+    <div><GenericComponent node={todoItem}/></div>
 {/each}
