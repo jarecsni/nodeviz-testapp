@@ -7,5 +7,4 @@
     import type { Page } from 'src/nodeviz/widgets/page/types';
     
     const pages:Node<Page> = convertJSON(pagesDef);
-    pages.value.active = true; // mark the top page as active for now
 </script>

@@ -1,8 +1,11 @@
+import type { SvelteComponent } from "svelte";
 import type { NodeObj } from "./Nodes";
 
 export class Node<T> {
     private _name:string;
     private _type:string;
+    private _active:boolean;
+    private _componentRef:SvelteComponent;
     private _value:T;
     private _children?:Node<T>[];
     private _parent?:Node<T>;    
@@ -10,12 +13,25 @@ export class Node<T> {
         this._name = name;
         this._type = type;
         this._value = value;
+        this._active = false;
     }
     get name() {
         return this._name;
     }
     get type() {
         return this._type;
+    }
+    get active() {
+        return this._active;
+    }
+    set active(active:boolean) {
+        this._active = active;
+    }
+    get componentRef() {
+        return this._componentRef;
+    }
+    set componentRef(componentRef:SvelteComponent) {
+        this._componentRef = componentRef;
     }
     get value() {
         return this._value;

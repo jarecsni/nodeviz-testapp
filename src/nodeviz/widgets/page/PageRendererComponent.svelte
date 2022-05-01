@@ -1,4 +1,4 @@
-{#if !node.value.active}
+{#if !node.active}
     <a href={"#"} on:click={()=>navigateToPage(node)}>{node.value.title}</a>
 {:else}    
     {#await pageComponentPromise then pageComponent}
