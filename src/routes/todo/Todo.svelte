@@ -1,6 +1,13 @@
+<input type="text" bind:value={todoDescription}>
+<button on:click={addTodo} disabled={!todoDescription}>Add</button>
+
+{#each $todos as todoItem }
+    <div><GenericComponentContainer node={todoItem}/></div>
+{/each}
+
 <script>
+	import GenericComponentContainer from './../../nodeviz/GenericComponentContainer.svelte';
 	import { Node } from '../../nodeviz/Node';
-    import GenericComponent from '../../nodeviz/GenericComponent.svelte';
     
     /*
     Ideas/questions/design.
@@ -41,10 +48,3 @@
         todoDescription = null;
     }
 </script>
-
-<input type="text" bind:value={todoDescription}>
-<button on:click={addTodo} disabled={!todoDescription}>Add</button>
-
-{#each $todos as todoItem }
-    <div><GenericComponent node={todoItem}/></div>
-{/each}
