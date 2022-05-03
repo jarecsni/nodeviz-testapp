@@ -1,5 +1,6 @@
 import {convertJSON} from './Node';
-import type {NodeObj} from './Nodes';
+import type {NodeObj} from './Node';
+
 describe('Node', () => {
     it('transforms a single node', () => {
         const node:NodeObj = {
