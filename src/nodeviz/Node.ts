@@ -1,5 +1,11 @@
 import type { SvelteComponent } from "svelte";
-import type { NodeObj } from "./Nodes";
+
+export type NodeObj = {
+    name: string,
+    type: string,
+    value: unknown,
+    children?: NodeObj[]
+}
 
 export class Node<T> {
     private _name:string;
