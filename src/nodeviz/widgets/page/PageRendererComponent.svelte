@@ -6,14 +6,14 @@
             <p>no page component loaded</p>
         {:else}
             {#if !!node.parent}
-                <GenericComponent node={node.parent}/>
+                <GenericComponent node={node.parent} {context}/>
             {/if}
             {#if !!node.children}
                 <div>
                     <ul class="pageLinks">
                         {#each childPages as childPage}
                             <li class="pageLink">
-                                <GenericComponent node={childPage}/>
+                                <GenericComponent node={childPage} {context}/>
                             </li>
                         {/each}
                     </ul>
@@ -25,21 +25,24 @@
 {/if}
 
 <script type="ts">
-	import GenericComponent from './../../GenericComponent.svelte';
-	import type { Node } from './../../Node';
-    import type { SvelteComponent } from "svelte";
+	import GenericComponent from '../../GenericComponent.svelte';
+	import type {Node} from './../../Node';
+    import type {SvelteComponent} from 'svelte';
+
+    import type {Page} from './types';
     import type { Context } from 'src/nodeviz/Context';
-    import type { Page } from './types';
 
     export let node:Node<Page>;
     export let context:Context;
-    //@ts-ignore 
+    
+    // @ts-ignore
     const pageComponentPromise:Promise<SvelteComponent> = node.value.pageComponent();
     const childPages = node.children || [];
 
-    function navigateToPage(page:Node<Page>) {
-        context.navigateTo(page);
+    function navigateToPage(node:Node<Page>) {
+        context.navigateTo(node);
     }
+
 </script>
 
 <style>
