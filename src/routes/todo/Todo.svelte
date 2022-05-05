@@ -33,10 +33,18 @@
     could add instances of any nodes, and edit them, but this time I decided to go 
     bottom up, and see how things can be generalised. In this step, I'll explore actions and
     state, how nodes can be stored in the state, and how state can be stored in the nodes
-    themselves (essentially introducing properties/state in the nodes). Also interesting idea
-    to attach behaviour to nodes themselves (very OO I know), like being able to handle 
+    themselves (essentially introducing properties/state in the nodes). 
+    
+    Also interesting idea to attach behaviour to nodes themselves (very OO I know), like being able to handle 
     actions. Also, now I want to play with external / internal representations, mobile/desktop
     renderers. So a lot of interesting insight can be gained from this little exercise.
+
+    Conditionality: don't show todo items which are completed etc.
+
+    Next up: 
+    [ ] mark todo as done
+    [ ] introduce show completed flag
+    [ ] render todo items based on completed + show completed flags
     */
 
     import { todos } from "./store";
