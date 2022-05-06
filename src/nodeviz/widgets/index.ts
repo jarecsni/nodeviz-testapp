@@ -1,4 +1,4 @@
 export const widgets = [
-    'page',
-    'todo'
+    'Page',
+    'Todo'
 ];

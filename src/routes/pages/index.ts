@@ -1,54 +1,31 @@
-import type { NodeObj } from "src/nodeviz/Nodes";
+import type { NodeObj } from '../../nodeviz/Node';
+import { Page } from '../../nodeviz/widgets/page/Page';
 
 const loadPageComponent = (name:string) => import('./resources/' + name + '.svelte');
 
 export const pagesDef:NodeObj = {
-    name: 'home',
-    type: 'page',
-    value: { 
-        title: 'Home',
-        pageComponent: () => loadPageComponent('HomePage') 
-    },
+    //@ts-ignore
+    value: new Page('Home', () => (loadPageComponent('HomePage'))),
     children: [
         {
-            name: 'news',
-            type: 'page',
-            value: {
-                title: 'News',
-                pageComponent: () => loadPageComponent('News')
-            }
+            //@ts-ignore
+            value: new Page('News', () => (loadPageComponent('News')))
         },
         {
-            name: 'about',
-            type: 'page',
-            value: {
-                title: 'About',
-                pageComponent: () => loadPageComponent('AboutUs')
-            }
+            //@ts-ignore
+            value: new Page('About', () => (loadPageComponent('AboutUs')))
         },
         {
-            name: 'jobs',
-            type: 'page',
-            value: {
-                title: 'Jobs',
-                pageComponent: () => loadPageComponent('Jobs')
-            },
+            //@ts-ignore
+            value: new Page('Jobs', () => (loadPageComponent('Jobs'))),
             children: [
                 {
-                    name: 'contract',
-                    type: 'page',
-                    value: {
-                        title: 'Contract Positions',
-                        pageComponent: () => loadPageComponent('ContractJobs')
-                    }
+                    //@ts-ignore
+                    value: new Page('Contract Positions', () => (loadPageComponent('ContractJobs')))
                 },
                 {
-                    name: 'perm',
-                    type: 'page',
-                    value: {
-                        title: 'Permanent Jobs',
-                        pageComponent: () => loadPageComponent('Employment')
-                    }
+                    //@ts-ignore
+                    value: new Page('Permanent Positions', () => (loadPageComponent('Employment')))
                 },      
             ]
         }

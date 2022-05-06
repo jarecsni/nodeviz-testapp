@@ -48,11 +48,13 @@
     */
 
     import { todos } from "./store";
+    import { Todo } from '../../nodeviz/widgets/todo/Todo';
 
     let todoDescription;
     function addTodo() {
         todos.set([...$todos, 
-            new Node(todoDescription, 'todo', {description: todoDescription})]);
+            new Node(todoDescription, new Todo(todoDescription))
+        ]);
         todoDescription = null;
     }
 </script>

@@ -1,31 +1,22 @@
 import type { SvelteComponent } from "svelte";
 
 export type NodeObj = {
-    name: string,
-    type: string,
     value: unknown,
     children?: NodeObj[]
 }
 
 export class Node<T> {
-    private _name:string;
-    private _type:string;
     private _active:boolean;
     private _componentRef:SvelteComponent;
     private _value:T;
     private _children?:Node<T>[];
     private _parent?:Node<T>;    
-    constructor(name:string, type:string, value:T) {
-        this._name = name;
-        this._type = type;
+    constructor(name:string, value:T) {
         this._value = value;
         this._active = false;
     }
-    get name() {
-        return this._name;
-    }
     get type() {
-        return this._type;
+        return this._value.constructor.name;
     }
     get active() {
         return this._active;
@@ -61,7 +52,7 @@ export class Node<T> {
 }
 
 export function convertJSON<T>(json:NodeObj, parentNode?:Node<T>):Node<T> {
-    const currentNode = new Node<T>(json.name, json.type, json.value as T);
+    const currentNode = new Node<T>(json.name, json.value as T);
     currentNode.parent = parentNode;
     if (json.children && json.children.length > 0) {
         json.children.forEach(child => {

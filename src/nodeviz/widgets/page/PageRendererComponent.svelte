@@ -29,8 +29,8 @@
 	import type {Node} from './../../Node';
     import type {SvelteComponent} from 'svelte';
 
-    import type {Page} from './types';
-    import type { Context } from 'src/nodeviz/Context';
+    import type {Page} from './Page';
+    import type { Context } from '../../Context';
 
     export let node:Node<Page>;
     export let context:Context;
