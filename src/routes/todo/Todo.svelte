@@ -1,11 +1,18 @@
+<h1>Todo App</h1>
+<div>
+    Show completed? <input type="checkbox" bind:checked={showCompleted}/>
+</div>
+
 <input type="text" bind:value={todoDescription}>
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
-{#each $todos as todoItem }
-    <div><GenericComponentContainer node={todoItem}/></div>
+<div class="todoContainer">
+    {#each $todos as todoItem }
+        <div><GenericComponentContainer node={todoItem}/></div>
 {/each}
+</div>
 
-<script>
+<script lang="ts">
 	import GenericComponentContainer from './../../nodeviz/GenericComponentContainer.svelte';
 	import { Node } from '../../nodeviz/Node';
     
@@ -42,8 +49,8 @@
     Conditionality: don't show todo items which are completed etc.
 
     Next up: 
-    [ ] mark todo as done
-    [ ] introduce show completed flag
+    [x] mark todo as done
+    [x] introduce show completed flag
     [ ] render todo items based on completed + show completed flags
     */
 
@@ -51,10 +58,21 @@
     import { Todo } from '../../nodeviz/widgets/todo/Todo';
 
     let todoDescription;
+    let showCompleted = true;
+
     function addTodo() {
         todos.set([...$todos, 
-            new Node(todoDescription, new Todo(todoDescription))
+            new Node(todoDescription, new Todo(todoDescription), {
+                isVisible: (node:Node<Todo>) => (!node.value.done || showCompleted)
+            })
         ]);
         todoDescription = null;
     }
 </script>
+
+<style>
+    .todoContainer {
+        height: 200px;
+        overflow: scroll;
+    }
+</style>

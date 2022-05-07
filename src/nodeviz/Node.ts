@@ -5,21 +5,35 @@ export type NodeObj = {
     children?: NodeObj[]
 }
 
+export enum MethodNames {
+    isVisible = 'isVisible'
+}
+type isVisibleMethod = (Node) => boolean;
+type Methods = {
+    [MethodNames.isVisible]?: isVisibleMethod    
+}
+
+
 export class Node<T> {
     private _active:boolean;
     private _componentRef:SvelteComponent;
     private _value:T;
+    private _methods: Methods;
     private _children?:Node<T>[];
-    private _parent?:Node<T>;    
-    constructor(name:string, value:T) {
+    private _parent?:Node<T>;
+    constructor(name:string, value:T, methods?:Methods) {
         this._value = value;
         this._active = false;
+        this._methods = methods;
     }
     get type() {
         return this._value.constructor.name;
     }
     get active() {
         return this._active;
+    }
+    getMethod(name: MethodNames) {
+        return this._methods[name];
     }
     set active(active:boolean) {
         this._active = active;

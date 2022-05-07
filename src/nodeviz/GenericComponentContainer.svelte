@@ -3,7 +3,7 @@
 </div>
 
 <script lang="ts">
-	import type { Node } from './Node';
+	import { MethodNames, type Node } from './Node';
     import type { Context } from './Context';
     import GenericComponent from './GenericComponent.svelte';
     
@@ -29,6 +29,9 @@
                     context: context
                 }
             });
+        }
+        isVisible(_node: Node<unknown>) {
+            return _node.getMethod(MethodNames.isVisible)(_node);
         }
     }
     const context = new ContextImpl();
