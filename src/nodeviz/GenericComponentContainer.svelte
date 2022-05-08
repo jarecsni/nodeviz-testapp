@@ -1,6 +1,8 @@
-<div bind:this={container}>
-    <GenericComponent {node} {context}/>
-</div>
+{#if context.isVisible(node)}
+    <div bind:this={container}>
+        <GenericComponent {node} {context}/>
+    </div>
+{/if}
 
 <script lang="ts">
 	import { MethodNames, type Node } from './Node';

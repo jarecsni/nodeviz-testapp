@@ -1,6 +1,10 @@
 <h1>Todo App</h1>
 <div>
-    Show completed? <input type="checkbox" bind:checked={showCompleted}/>
+    Show completed? 
+    <input type="checkbox" 
+        bind:checked={showCompleted} 
+        on:change={handleChangeShowCompleted}
+    />
 </div>
 
 <input type="text" bind:value={todoDescription}>
@@ -9,7 +13,7 @@
 <div class="todoContainer">
     {#each $todos as todoItem }
         <div><GenericComponentContainer node={todoItem}/></div>
-{/each}
+    {/each}
 </div>
 
 <script lang="ts">
@@ -62,11 +66,16 @@
 
     function addTodo() {
         todos.set([...$todos, 
-            new Node(todoDescription, new Todo(todoDescription), {
+            new Node(new Todo(todoDescription), {
                 isVisible: (node:Node<Todo>) => (!node.value.done || showCompleted)
             })
         ]);
         todoDescription = null;
+    }
+    
+    function handleChangeShowCompleted(e: Event) {
+        // This solution will repaint each and every todo item
+        todos.set([...$todos]);
     }
 </script>
 

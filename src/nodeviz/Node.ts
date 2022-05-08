@@ -21,7 +21,7 @@ export class Node<T> {
     private _methods: Methods;
     private _children?:Node<T>[];
     private _parent?:Node<T>;
-    constructor(name:string, value:T, methods?:Methods) {
+    constructor(value:T, methods?:Methods) {
         this._value = value;
         this._active = false;
         this._methods = methods;
@@ -66,7 +66,7 @@ export class Node<T> {
 }
 
 export function convertJSON<T>(json:NodeObj, parentNode?:Node<T>):Node<T> {
-    const currentNode = new Node<T>(json.name, json.value as T);
+    const currentNode = new Node<T>(json.value as T);
     currentNode.parent = parentNode;
     if (json.children && json.children.length > 0) {
         json.children.forEach(child => {

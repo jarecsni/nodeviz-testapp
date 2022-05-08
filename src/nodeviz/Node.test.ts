@@ -9,7 +9,7 @@ describe('Node', () => {
         const converted = convertJSON(node);
         expect(converted.children).toBeUndefined();
         expect(converted.parent).toBeUndefined();
-        expect(converted.type).toBe('someType');
+        expect(converted.type).toBe('Object');
     });
     it('sets the parent correctly', () => {
         const node:NodeObj = {
