@@ -1,30 +1,30 @@
 import type { SvelteComponent } from "svelte";
+import { v4 as uuidv4 } from 'uuid';
 
 export type NodeObj = {
     value: unknown,
     children?: NodeObj[]
 }
 
-export enum MethodNames {
-    isVisible = 'isVisible'
-}
-type isVisibleMethod = (Node) => boolean;
-type Methods = {
-    [MethodNames.isVisible]?: isVisibleMethod    
+export interface NodeHandler {
+    isVisible(node:Node<object>):boolean;
 }
 
-
-export class Node<T> {
+export class Node<T extends object> {
     private _active:boolean;
     private _componentRef:SvelteComponent;
     private _value:T;
-    private _methods: Methods;
+    private _handler: NodeHandler;
     private _children?:Node<T>[];
     private _parent?:Node<T>;
-    constructor(value:T, methods?:Methods) {
+    private _id = uuidv4();
+    constructor(value:T, handler?:NodeHandler) {
         this._value = value;
         this._active = false;
-        this._methods = methods;
+        this._handler = handler;
+    }
+    get id() {
+        return this._id;
     }
     get type() {
         return this._value.constructor.name;
@@ -32,8 +32,8 @@ export class Node<T> {
     get active() {
         return this._active;
     }
-    getMethod(name: MethodNames) {
-        return this._methods[name];
+    getHandler() {
+        return this._handler;
     }
     set active(active:boolean) {
         this._active = active;
@@ -46,6 +46,9 @@ export class Node<T> {
     }
     get value() {
         return this._value;
+    }
+    set value(v:T) {
+        this._value = v;
     }
     get children() {
         return this._children;
@@ -65,7 +68,7 @@ export class Node<T> {
     }
 }
 
-export function convertJSON<T>(json:NodeObj, parentNode?:Node<T>):Node<T> {
+export function convertJSON<T extends object>(json:NodeObj, parentNode?:Node<T>):Node<T> {
     const currentNode = new Node<T>(json.value as T);
     currentNode.parent = parentNode;
     if (json.children && json.children.length > 0) {
