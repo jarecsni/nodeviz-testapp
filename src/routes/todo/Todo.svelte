@@ -13,7 +13,7 @@
     {#each $todos as todoItem (todoItem.id)}
         <div><GenericComponentContainer 
             node={todoItem} 
-            triggers={{showCompleted: showCompleted}}/></div>
+            triggers={{showCompleted}}/></div>
     {/each}
 </div>
 

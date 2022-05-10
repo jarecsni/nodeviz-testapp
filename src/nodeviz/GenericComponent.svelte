@@ -15,7 +15,7 @@
     import {getWidget} from './widgets/WidgetRegistry';
     import type { Context } from './Context';
 
-    export let node:Node<unknown>;
+    export let node:Node<object>;
     export let context:Context;
     let widgetPromise = getWidget(node.type);
 </script>
