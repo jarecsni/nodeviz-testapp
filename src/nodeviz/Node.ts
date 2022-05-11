@@ -10,6 +10,10 @@ export interface NodeHandler {
     isVisible(node:Node<object>):boolean;
 }
 
+const defaultHandler = {
+    isVisible: () => true
+}
+
 export class Node<T extends object> {
     private _active:boolean;
     private _componentRef:SvelteComponent;
@@ -18,7 +22,7 @@ export class Node<T extends object> {
     private _children?:Node<T>[];
     private _parent?:Node<T>;
     private _id = uuidv4();
-    constructor(value:T, handler?:NodeHandler) {
+    constructor(value:T, handler:NodeHandler = defaultHandler) {
         this._value = value;
         this._active = false;
         this._handler = handler;

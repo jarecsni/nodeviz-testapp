@@ -10,7 +10,7 @@
     import GenericComponent from './GenericComponent.svelte';
     
     export let node:Node<object>;
-    export let triggers:unknown;
+    export let triggers:unknown = {};
     let container;
     const changeObserver = {
         set(obj: object, prop: string, value: unknown) {
