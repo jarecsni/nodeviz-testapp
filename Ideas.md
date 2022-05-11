@@ -1,6 +1,8 @@
 ### 1. Conditionality
 Nodes should be queried whether they can be rendered. This is an important step towards a fully generic approach. Say, you have 3 pages in a webapp, where 1 page is only available if the user has admin privileges. Now when you render the list of nodes, each time the node needs to be queried if it is to be included in the render (visible or something.) Since at the bottom of this, the application written with nodez are fully reactive, nodes can easily change their visible property and go hidden at any time (say user marks a todo complete, which should not be showing in the list).
 
+-> This has been implemented for todos. Nodes have a NodeHandler interface where they can specify various methods. Currently isVisible is supported.
+
 ### 2. Indirection, decoupling, plug and play
 State frameworks like Redux drive people to write monolithic applications, where things get plumbed together in a mesh of actions, etc. So it is very difficult to extract and reuse anything. Components therefore either do their own backend calls etc (which is ridiculous - why do we have Redux at all if that is the case) or they don't really participate in the application logic, they're low level components, taking params and emitting actions, but again, they get fully wired into the application.
 

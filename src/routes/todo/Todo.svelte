@@ -10,18 +10,14 @@
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
 <div class="todoContainer">
-    {#each $todos as todoItem (todoItem.id)}
-        <div><GenericComponentContainer 
-            node={todoItem} 
-            triggers={{showCompleted}}/></div>
-    {/each}
+    <GenericComponentCollection nodes={$todos} triggers={{showCompleted}}/>
 </div>
 
 <script lang="ts">
-	import GenericComponentContainer from './../../nodeviz/GenericComponentContainer.svelte';
 	import {Node} from '../../nodeviz/Node';
     import {todos} from "./store";
     import {Todo} from '../../nodeviz/widgets/todo/Todo';
+    import GenericComponentCollection from '../../nodeviz/GenericComponentCollection.svelte';
 
     let todoDescription;
     let showCompleted = true;
