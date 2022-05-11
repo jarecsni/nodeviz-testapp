@@ -13,7 +13,7 @@
 <script type="typescript">
 	import type {Node} from './Node';
     import {getWidget} from './widgets/WidgetRegistry';
-    import type { Context } from './Context';
+    import type {Context} from './Context';
 
     export let node:Node<object>;
     export let context:Context;

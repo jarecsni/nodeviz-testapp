@@ -5,8 +5,8 @@
 {/if}
 
 <script lang="ts">
-	import type { Node } from './Node';
-    import type { Context } from './Context';
+	import type {Node} from './Node';
+    import type {Context} from './Context';
     import GenericComponent from './GenericComponent.svelte';
     
     export let node:Node<object>;

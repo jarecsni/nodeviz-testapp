@@ -1,5 +1,5 @@
-import { widgets } from ".";
-import type { Widget, WidgetInfo } from "./Widget";
+import {widgets} from '.';
+import type {Widget, WidgetInfo} from './Widget';
 
 const registry = new Map<string, WidgetInfo>();
 let initDone = false;

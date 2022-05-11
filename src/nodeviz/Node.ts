@@ -1,5 +1,5 @@
-import type { SvelteComponent } from "svelte";
-import { v4 as uuidv4 } from 'uuid';
+import type {SvelteComponent} from 'svelte';
+import {v4 as uuidv4} from 'uuid';
 
 export type NodeObj = {
     value: unknown,

@@ -28,9 +28,8 @@
 	import GenericComponent from '../../GenericComponent.svelte';
 	import type {Node} from './../../Node';
     import type {SvelteComponent} from 'svelte';
-
     import type {Page} from './Page';
-    import type { Context } from '../../Context';
+    import type {Context} from '../../Context';
 
     export let node:Node<Page>;
     export let context:Context;

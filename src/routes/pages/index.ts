@@ -1,5 +1,5 @@
-import type { NodeObj } from '../../nodeviz/Node';
-import { Page } from '../../nodeviz/widgets/page/Page';
+import type {NodeObj} from '../../nodeviz/Node';
+import {Page} from '../../nodeviz/widgets/page/Page';
 
 const loadPageComponent = (name:string) => import('./resources/' + name + '.svelte');
 

@@ -1,6 +1,6 @@
-import type { Node } from "./Node";
+import type {Node} from './Node';
 
 export interface Context {
-    navigateTo(node:Node<unknown>): void;
-    isVisible(node:Node<unknown>): boolean;
+    navigateTo(node:Node<object>): void;
+    isVisible(node:Node<object>): boolean;
 }

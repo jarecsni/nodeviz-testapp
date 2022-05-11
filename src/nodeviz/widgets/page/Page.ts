@@ -1,4 +1,4 @@
-import type { SvelteComponent } from "svelte"
+import type {SvelteComponent} from 'svelte';
 
 export class Page {
     private _title: string;
