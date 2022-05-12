@@ -6,3 +6,7 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
         renderer: TodoDesktopComponent
     }
 });
+
+export const widgets = [
+    'Details'
+];

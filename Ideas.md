@@ -17,3 +17,28 @@ To be generic, nodes cannot render other nodes. They need to use generic renderi
 So very simply put, each node is to be rendered externally except for the one which is active. Which leads us over to the question of node navigation. However, I'm not even sure about this. Imagine that you 'expand' some nodes, but you leave them 'open'. So is this navigation? If so, if you can have multiple open nodes, what's the point in having the external or internal distinction. I think node state is more appropriate here. Nodes have a default state which corresponds roughly to the 'external' view of a widget. So it's basically the node state that will drive this.
 
 - [x] [03 May 2022 - this has been now implemented.]
+
+### Refactor Todo app
+I don't quite like how the todo app has this list thing, it renders todos, adds the checkbox to
+show/hide completed items. Yesterday I was thinking that this whole 'trigger' business is not necessary. This node structure should use the same store, and therefore changes will be picked up by using normal Svelte mechanisms. So in concrete terms, we will have another Widget, TodoHome which will render its children which are Todos. This also solves the problem of this ugly Collection business, so back to the simple model of having a graph of nodes, which are rendered by their registered renderers.
+
+Now this also shows another problem which I want to solve. Currently widgets are not organised into a hierarchy, so this would result in the following:
+
+TodoHome - NodeHomeWidget
+Todo - TodoWidget
+etc.
+
+What I would like to see is more like this:
+
+page - PageWidget
+todo - TodoHomeWidget 
+       TodoWidget
+
+So basically packages of widgets. But this is of course a problem because we want to be able look up widgets using a simple registry (based on the value object's class type).
+
+The WidgetRegistry currently reads the list of widget names and iterates over them, processing the WidgetInfos. This could be extended by introducing a list of widgets inside the widget. I don't think a full recursive approach is warranted here, we simply need another level, with the widgets implementing the behaviour for the package. So this is quite straightforward to implement. There's one more thing to bear in mind, it's unique names. So in the Todo package (which will be the todo home widget), we'll have a TodoDetails widget. Now these will map to node value types Todo and TodoDetails respectively. We could introduce a concept of package. Node instances would be created with the package string as a prefix and the type getter would return:
+
+Todo/Todo
+Todo/TodoDetails
+
+By simply using the entry level widget name as package (therefore the 'master' or 'home' widget for each package would be in the form of Widget/Widget). This would be the widget for rendering the root of the node graph. 
