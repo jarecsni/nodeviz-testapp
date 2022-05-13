@@ -1,40 +1,9 @@
-<h1>Todo App</h1>
-<div>
-    Show completed? 
-    <input type="checkbox" 
-        bind:checked={showCompleted} 
-    />
-</div>
-
-<input type="text" bind:value={todoDescription}>
-<button on:click={addTodo} disabled={!todoDescription}>Add</button>
-
-<div class="todoContainer">
-    <GenericComponentCollection nodes={$todos} triggers={{showCompleted}}/>
-</div>
+<GenericComponentContainer {node}/>
 
 <script lang="ts">
-	import {Node} from '../../nodeviz/Node';
-    import {todos} from "./store";
-    import {Todo} from '../../nodeviz/widgets/todo/Todo';
-    import GenericComponentCollection from '../../nodeviz/GenericComponentCollection.svelte';
-
-    let todoDescription;
-    let showCompleted = true;
-
-    function addTodo() {
-        todos.set([...$todos, 
-            new Node(new Todo(todoDescription), {
-                isVisible: (node:Node<Todo>) => (!node.value.done || showCompleted)
-            })
-        ]);
-        todoDescription = null;
-    }
+    import GenericComponentContainer from '../../nodeviz/GenericComponentContainer.svelte';
+    import { TodoHome } from '../../nodeviz/widgets/todo/TodoHome';
+    import { Node } from '../../nodeviz/Node';
+    const node = new Node('Todo', new TodoHome());
 </script>
 
-<style>
-    .todoContainer {
-        height: 200px;
-        overflow: scroll;
-    }
-</style>

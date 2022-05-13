@@ -10,13 +10,15 @@ const initRegistry = () => {
         widgets.forEach(w => {
             import('./' + w + '/index.ts').then(module => {
                 const {getWidgetInfo} = module;
-                registry.set(w + '/' + w, getWidgetInfo());
+                const info = getWidgetInfo();
+                registry.set(w + '/' + (info.type || w), info);
                 const childWidgets = module.widgets;
                 // TODO this could be extracted etc to make it more DRY
                 childWidgets && childWidgets.forEach(childWidget => {
-                    import('./' + childWidget + '/index.ts').then(childModule => {
+                    import('./' + w + '/' + childWidget.toLowerCase() + '/index.ts').then(childModule => {
                         const {getWidgetInfo} = childModule;
-                        registry.set(w + '/' + childWidget, getWidgetInfo());  
+                        const childInfo = getWidgetInfo();
+                        registry.set(w + '/' + (childInfo.type || childWidget), childInfo);  
                     })      
                 });
                 if (++count == widgets.length) {
