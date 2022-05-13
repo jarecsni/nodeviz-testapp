@@ -11,12 +11,9 @@
 
 <div class="todoContainer">
     {#each $todos as node (node.id)}
-        {#if visible[node.id].isVisible}
-        <!-- {#if node.getHandler().isVisible(node) } -->
-            <div>
-                <GenericComponentContainer {node} />
-            </div>
-        {/if}
+        <div>
+            <GenericComponentContainer {node} />
+        </div>
     {/each}
 </div>
 
@@ -30,23 +27,9 @@
     let visible = [];
 
     function addTodo() {
-        const todo = new Node('Todo', new Todo(todoDescription), {
-            isVisible: (node:Node<Todo>) => (!node.value.done || $showCompleted)
-        });
+        const todo = new Node('Todo', new Todo(todoDescription));
         todos.set([...$todos, todo]);
-        visible[todo.id] = {todo: todo, isVisible: true};
         todoDescription = null;
-    }
-
-    $: {
-        $showCompleted;
-        Object.keys(visible).forEach(k => {
-            const v = visible[k];
-            const result = v.todo.getHandler().isVisible(v.todo);
-            v.isVisible = result;
-            console.log('visible:', result);
-        });
-        visible = visible;
     }
 </script>
 
