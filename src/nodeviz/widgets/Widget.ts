@@ -5,8 +5,9 @@ export interface Widget {
 }
 
 export interface WidgetInfo {
-    type: string,
+    type?: string,
     desktop: {
         renderer: typeof SvelteComponent
-    }
+    },
+    widgets?: string[]
 }
