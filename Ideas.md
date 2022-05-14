@@ -42,3 +42,27 @@ Todo/Todo
 Todo/TodoDetails
 
 By simply using the entry level widget name as package (therefore the 'master' or 'home' widget for each package would be in the form of Widget/Widget). This would be the widget for rendering the root of the node graph. 
+
+[DONE]
+
+### Indirection ideas Fri 13 May
+Today I have done the refactoring detailed above, so it is possible to have a package of widgets which can support Nodes. Like the Todo Home view that shows a list of Todo nodes. And for this, there was no need for the Handler interface and the tricky update tracking either. Since the svelte store is distributed (as in not centralised like Redux), this group of widgets can use the same store, and so svelte's update mechanism can work nicely. But this is a level of indirection very common in UI apps, collaborating components, so there's nothing too fancy here, apart from the ability to express the UI in terms of nodes as opposed to UI components (remember, the key theme of this framework is 'data driven').
+
+The following areas could be explored next:
+
+- Node persistence
+- Dynamic nodes (they add children based on backend calls etc)
+- Plugin like decoupling
+
+Just as a reminder, the original idea was something like this:
+
+1) The desktop application supported editing mode
+2) Nodes could be inserted (based on type compatibility)
+3) The graph could be exported and imported into a mobile app
+
+So the actual application was about multiple choice exam prep. I got this idea for a generic approach based on the number of similar question types, which could be well expressed by widgets, that can render a certain question type (data type).
+
+In this second attempt, I am not focusing on the editing mode at present but being able configure widgets is a good idea.
+
+Ok the next thing we could look at is persistence. Concretely in the todo example, the user can create new todo items. These could be persisted. Now for this some sort of login would be needed. I guess this is where we take a detour to Firebase. Of course this can also be done in relation to Svelte. Maybe there's an automatic shadowing of the svelte store in to Firebase.
+
