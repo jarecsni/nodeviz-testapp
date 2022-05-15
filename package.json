@@ -41,8 +41,11 @@
   },
   "type": "module",
   "dependencies": {
+    "firebase": "^9.8.1",
     "invertly": "^1.0.0",
     "nodeviz": "../nodeviz/package",
+    "rxfire": "^6.0.3",
+    "rxjs": "^7.5.5",
     "uuid": "^8.3.2"
   },
   "jest": {
