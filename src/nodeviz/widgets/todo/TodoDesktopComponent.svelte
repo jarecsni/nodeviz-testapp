@@ -10,26 +10,54 @@
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
 <div class="todoContainer">
-    {#each $todos as node (node.id)}
+    {#each nodes as node (node.id)}
         <div>
-            <GenericComponentContainer {node} />
+            <GenericComponentContainer {node}/>
         </div>
     {/each}
 </div>
 
 <script lang="ts">
-	import {Node} from '../../Node';
+	import {todos, showCompleted} from './store';
+    import {
+		onSnapshot,
+        addDoc
+	} from 'firebase/firestore';
+    import {browser} from '$app/env';
+	import {dbRef, db} from './firebase';
+    import {Node} from '../../Node';
     import {Todo} from './Todo';
-    import {todos, showCompleted} from './store';
     import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 
+    let loadingData = true;
+	const unsubscribe =
+		browser &&
+		onSnapshot(dbRef, (querySnapshot) => {
+			let todosSnapshot = [];
+			querySnapshot.forEach((doc) => {
+				let todo = { ...doc.data(), id: doc.id };
+				todosSnapshot = [...todosSnapshot, todo];
+			});
+			$todos = todosSnapshot;
+			loadingData = false;
+		});    
+    
     let todoDescription;
-    let visible = [];
+    let nodes = [];    
+    $: {
+        nodes = $todos.map(t => new Node('Todo', Todo.valueOf(t)));
+    }
 
-    function addTodo() {
-        const todo = new Node('Todo', new Todo(todoDescription));
-        todos.set([...$todos, todo]);
+    async function addTodo() {
+        const todo = new Todo(todoDescription);
         todoDescription = null;
+        await addDoc(dbRef, {
+				...todo.toJson()
+			});
+    }
+
+    function onTodoChanged(todo:CustomEvent<Todo>) {
+        console.log('todo changed:', todo);
     }
 </script>
 

@@ -1,14 +1,24 @@
 {#if !node.value.done || $showCompleted}
     <div class="todoItem">
-        {node.value.title}<input type="checkbox" bind:checked={node.value.done}/>    
+        {node.value.title}
+        <input type="checkbox" 
+            bind:checked={node.value.done}
+            on:change={onChangeDone}
+        />    
     </div>
 {/if}
 
 <script type="ts">
-	import type { Node } from '../../../Node';
-    import { showCompleted } from '../store';
-    import type { Todo } from '../Todo';
+    import {createEventDispatcher} from 'svelte';
+	import type {Node} from '../../../Node';
+    import {showCompleted} from '../store';
+    import type {Todo} from '../Todo';
     export let node:Node<Todo>;
+    const dispatch = createEventDispatcher<{todoUpdated: Todo}>();
+    
+    function onChangeDone(e: Event) {
+        
+    }
 </script>
 
 <style>
