@@ -1,9 +1,14 @@
+export type TodoJson = {
+    title:string,
+    done:boolean
+}
+
 export class Todo {
     _title:string;
     _done:boolean;
-    constructor(title: string) {
+    constructor(title: string, done: boolean = false) {
         this._title = title;
-        this._done = false;
+        this._done = done;
     }
     get done() {
         return this._done;
@@ -16,5 +21,14 @@ export class Todo {
     }
     set title(v:string) {
         this._title = v;
+    }
+    toJson():TodoJson {
+        return {
+            title: this._title,
+            done: this._done
+        }
+    }
+    static valueOf(v: {title: string, done:boolean}): Todo {
+        return new Todo(v.title, v.done);
     }
 }
