@@ -12,7 +12,7 @@
 <div class="todoContainer">
     {#each nodes as node (node.id)}
         <div>
-            <GenericComponentContainer {node}/>
+            <GenericComponentContainer {node} on:todoUpdated={onTodoUpdated}/>
         </div>
     {/each}
 </div>
@@ -56,7 +56,7 @@
 			});
     }
 
-    function onTodoChanged(todo:CustomEvent<Todo>) {
+    function onTodoUpdated(todo:CustomEvent<Todo>) {
         console.log('todo changed:', todo);
     }
 </script>

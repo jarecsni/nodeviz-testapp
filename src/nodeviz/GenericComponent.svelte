@@ -6,6 +6,7 @@
             this={widget.desktop.renderer} 
             {node}
             {context}
+            {$$restProps}
         />
     {/if}
 {/await}
