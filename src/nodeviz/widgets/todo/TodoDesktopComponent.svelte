@@ -12,7 +12,7 @@
 <div class="todoContainer">
     {#each nodes as node (node.id)}
         <div>
-            <GenericComponentContainer {node} on:todoUpdated={onTodoUpdated}/>
+            <GenericComponentContainer {node} on:nodeUpdated={onTodoUpdated}/>
         </div>
     {/each}
 </div>
@@ -21,7 +21,9 @@
 	import {todos, showCompleted} from './store';
     import {
 		onSnapshot,
-        addDoc
+        addDoc,
+updateDoc,
+doc
 	} from 'firebase/firestore';
     import {browser} from '$app/env';
 	import {dbRef, db} from './firebase';
@@ -56,8 +58,11 @@
 			});
     }
 
-    function onTodoUpdated(todo:CustomEvent<Todo>) {
+    async function onTodoUpdated(todo:CustomEvent<Todo>) {
         console.log('todo changed:', todo);
+        await updateDoc(doc(db, 'todo', todo.detail.id), {
+			done: todo.detail.done
+		});
     }
 </script>
 

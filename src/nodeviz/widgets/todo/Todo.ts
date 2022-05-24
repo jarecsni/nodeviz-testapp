@@ -1,14 +1,22 @@
+import {v4 as uuidv4} from 'uuid';
+
 export type TodoJson = {
     title:string,
-    done:boolean
+    done:boolean,
+    id:string
 }
 
 export class Todo {
-    _title:string;
-    _done:boolean;
-    constructor(title: string, done: boolean = false) {
+    private _title:string;
+    private _done:boolean;
+    private _id:string;
+    constructor(title: string, done: boolean = false, id:string = uuidv4()) {
         this._title = title;
         this._done = done;
+        this._id = id;
+    }
+    get id() {
+        return this._id;
     }
     get done() {
         return this._done;
@@ -25,10 +33,11 @@ export class Todo {
     toJson():TodoJson {
         return {
             title: this._title,
-            done: this._done
+            done: this._done,
+            id: this._id
         }
     }
-    static valueOf(v: {title: string, done:boolean}): Todo {
-        return new Todo(v.title, v.done);
+    static valueOf(v: {title: string, done:boolean, id:string}): Todo {
+        return new Todo(v.title, v.done, v.id);
     }
 }

@@ -12,8 +12,11 @@ but now we have container, that would need to pass that down to its GC child. Be
 Good discussion here
 https://github.com/sveltejs/svelte/issues/2837
 
-22/07
+22/05
 Actually this might be a non-issue for now. The original goal was not to have to include the logic to render/not render todo items in the parent. Now basically the DetailsDesktopComponent has the logic to pull in the showComplete piece of state, and the node's done field. So there's no need for the child to communicate that it's done status changed. Yes, it's still something that's potentially interesting and it's unclear how to do as yet. Also on that note, we can use store updates to trigger any functionality, don't forget that. With the $: thing, we can trigger code to execute on state change :) So, in theory we don't need any eventing mechanism at all. 
+
+24/05
+Introduced onNodeUpdate to allow children to communicate changes to nodes. For the time being it's ok and allows the TodoDesktopComponent to update the node in the DB. Now we can further extract the DB logic from the component. 
 
 ##### T2: 
 Use the framework store User to store todos under a specific user.

@@ -1,6 +1,6 @@
 {#if isVisible}
     <div bind:this={container}>
-        <GenericComponent {node} {context} on:{...$listeners}/>
+        <GenericComponent {node} {context} on:nodeUpdated/>
     </div>
 {/if}
 

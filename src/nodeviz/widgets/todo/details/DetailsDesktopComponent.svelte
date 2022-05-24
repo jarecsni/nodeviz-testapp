@@ -14,11 +14,12 @@
     import {showCompleted} from '../store';
     import type {Todo} from '../Todo';
     export let node:Node<Todo>;
-    const dispatch = createEventDispatcher<{todoUpdated: Todo}>();
+    const dispatch = createEventDispatcher<{nodeUpdated: Todo}>();
     
     function onChangeDone(e: Event) {
-        
+        dispatch('nodeUpdated', node.value);
     }
+    
 </script>
 
 <style>

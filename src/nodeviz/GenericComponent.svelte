@@ -6,7 +6,7 @@
             this={widget.desktop.renderer} 
             {node}
             {context}
-            {$$restProps}
+            on:nodeUpdated
         />
     {/if}
 {/await}
