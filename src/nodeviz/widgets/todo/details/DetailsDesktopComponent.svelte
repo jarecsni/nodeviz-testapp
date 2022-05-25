@@ -10,7 +10,7 @@
 
 <script type="ts">
     import {createEventDispatcher} from 'svelte';
-	import type {Node} from '../../../Node';
+	import type {Node} from '$lib/nodeviz/Node';
     import {showCompleted} from '../store';
     import type {Todo} from '../Todo';
     export let node:Node<Todo>;

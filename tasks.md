@@ -18,6 +18,12 @@ Actually this might be a non-issue for now. The original goal was not to have to
 24/05
 Introduced onNodeUpdate to allow children to communicate changes to nodes. For the time being it's ok and allows the TodoDesktopComponent to update the node in the DB. Now we can further extract the DB logic from the component. 
 
+25/05 
+Refactor: moved Node to $lib folder - Q: will this work, if it will be in its own npm package?
+NEXT: 
+    - Widget loading fails for the first time
+    - Move Node out into nodeviz project and test
+
 ##### T2: 
 Use the framework store User to store todos under a specific user.
 ##### T3:

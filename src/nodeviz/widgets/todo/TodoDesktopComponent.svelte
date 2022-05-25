@@ -27,7 +27,7 @@ doc
 	} from 'firebase/firestore';
     import {browser} from '$app/env';
 	import {dbRef, db} from './firebase';
-    import {Node} from '../../Node';
+    import {Node} from '$lib/nodeviz/Node';
     import {Todo} from './Todo';
     import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 

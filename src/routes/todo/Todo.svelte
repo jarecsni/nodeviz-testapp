@@ -14,7 +14,7 @@
 	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 	import GenericComponentContainer from '../../nodeviz/GenericComponentContainer.svelte';
 	import { TodoHome } from '../../nodeviz/widgets/todo/TodoHome';
-	import { Node } from '../../nodeviz/Node';
+	import { Node } from '$lib/nodeviz/Node';
 
 	import Profile from './Profile.svelte';
 
