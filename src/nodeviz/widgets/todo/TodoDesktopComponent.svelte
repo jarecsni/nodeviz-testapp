@@ -18,16 +18,16 @@
 </div>
 
 <script lang="ts">
+	import {Node} from 'nodeviz/Node';
 	import {todos, showCompleted} from './store';
     import {
 		onSnapshot,
         addDoc,
-updateDoc,
-doc
+        updateDoc,
+        doc
 	} from 'firebase/firestore';
     import {browser} from '$app/env';
 	import {dbRef, db} from './firebase';
-    import {Node} from '$lib/nodeviz/Node';
     import {Todo} from './Todo';
     import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 

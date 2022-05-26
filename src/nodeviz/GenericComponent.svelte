@@ -12,7 +12,7 @@
 {/await}
 
 <script type="typescript">
-	import type {Node} from './Node';
+	import type {Node} from 'nodeviz/Node';
     import {getWidget} from './widgets/WidgetRegistry';
     import type {Context} from './Context';
 

@@ -1,4 +1,4 @@
-import type {Node} from '../../Node';
+import {Node} from 'nodeviz/Node';
 import type {TodoJson} from './Todo';
 import {writable} from 'svelte/store';
 

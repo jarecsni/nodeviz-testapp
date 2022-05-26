@@ -26,7 +26,7 @@
 
 <script type="ts">
 	import GenericComponent from '../../GenericComponent.svelte';
-	import type {Node} from './../../Node';
+	import type {Node} from 'nodeviz/Node';
     import type {SvelteComponent} from 'svelte';
     import type {Page} from './Page';
     import type {Context} from '../../Context';

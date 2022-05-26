@@ -5,7 +5,7 @@
 {/if}
 
 <script lang="ts">
-	import type {Node} from '$lib/nodeviz/Node';
+	import type {Node} from 'nodeviz/Node';
     import type {Context} from './Context';
     import GenericComponent from './GenericComponent.svelte';
     
