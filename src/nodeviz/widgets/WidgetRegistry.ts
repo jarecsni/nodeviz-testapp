@@ -7,31 +7,41 @@ let initDone = false;
 const initRegistry = () => {
     return new Promise((resolve, reject) => {
         let count = 0;
+        const promises = [], childPromises = [];
         widgets.forEach(w => {
-            import('./' + w + '/index.ts').then(module => {
+            promises.push(import('./' + w + '/index.ts').then(module => {
                 const info = module.getWidgetInfo();
+                console.log('registering', info.type || w);
                 registry.set(w + '/' + (info.type || w), info);
                 const childWidgets = info.widgets;
                 // TODO this could be extracted etc to make it more DRY
                 childWidgets && childWidgets.forEach(childWidget => {
-                    import('./' + w + '/' + childWidget + '/index.ts').then(childModule => {
+                    childPromises.push(import('./' + w + '/' + childWidget + '/index.ts').then(childModule => {
                         const childInfo = childModule.getWidgetInfo();
+                        console.log('registering child', childInfo.type);
                         registry.set(w + '/' + (childInfo.type || childWidget), childInfo);  
-                    })      
+                    }));      
                 });
-                if (++count == widgets.length) {
-                    initDone = true;
-                    resolve(registry);
-                }
-            });
+            }));
+        });
+        // FIXME think of possible ways of making this simpler / nicer
+        // This works fine, but it's a bit ugly, not sure right now how else this could be done
+        Promise.all(promises).then(() => {
+            Promise.all(childPromises).then(() => {
+                initDone = true;
+                resolve(registry);
+            })
         });
     })
 }
 
 export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
     if (!initDone) {
+        console.log('waiting for registry init');
         await initRegistry();
+        console.log('init complete');
     }
     const widget = await registry.get(type);
+    console.log('widget for type', type, 'is', widget);
     return widget;
 }

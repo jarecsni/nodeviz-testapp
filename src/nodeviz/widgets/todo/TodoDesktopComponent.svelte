@@ -19,7 +19,7 @@
 
 <script lang="ts">
 	import {Node} from 'nodeviz/Node';
-	import {todos, showCompleted} from './store';
+	import {showCompleted} from './store';
     import {
 		onSnapshot,
         addDoc,
@@ -32,6 +32,7 @@
     import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 
     let loadingData = true;
+    let todos = [];
 	const unsubscribe =
 		browser &&
 		onSnapshot(dbRef, (querySnapshot) => {
@@ -40,14 +41,14 @@
 				let todo = { ...doc.data(), id: doc.id };
 				todosSnapshot = [...todosSnapshot, todo];
 			});
-			$todos = todosSnapshot;
+			todos = todosSnapshot;
 			loadingData = false;
 		});    
     
     let todoDescription;
     let nodes = [];    
     $: {
-        nodes = $todos.map(t => new Node('Todo', Todo.valueOf(t)));
+        nodes = todos.map(t => new Node('Todo', Todo.valueOf(t)));
     }
 
     async function addTodo() {

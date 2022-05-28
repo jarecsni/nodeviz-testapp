@@ -24,6 +24,19 @@ NEXT:
     - Widget loading fails for the first time
     - Move Node out into nodeviz project and test
 
+28/05
+Widget loading: cannot reproduce the issue 
+Node test is positive, I have added it to the nodeviz project.
+Working on extracting the firebase stuff from the todo component.
+
+Managed to reproduce the issue, and fixed, now all widgets are discovered and registered before we mark the initialisation as done and resolve the promise. 
+
+>> NEXT
+1) Externalise the registry
+2) ?
+
+I'm not too sure where to go next. A sudden idea is serialising and deserialising the app graph which is a must have step for dynamically building apps. But for that, we might need a third example app.
+
 ##### T2: 
 Use the framework store User to store todos under a specific user.
 ##### T3:
