@@ -8,8 +8,9 @@
 <style>
 	.pageContent {
 		border: none;
-		width: 100%;
+		width: 400px;
 		height: 100%;
+		margin: 20px;
 	}
 	ul {
 		padding-inline-start: 0;
@@ -19,3 +20,11 @@
 		padding: 5px;
 	}
 </style>
+
+<script>
+	// Import F7 Bundle
+	import Framework7 from 'framework7/lite';
+	// Import F7-Svelte Plugin
+	import Framework7Svelte from 'framework7-svelte';
+	Framework7.use(Framework7Svelte);
+</script>
