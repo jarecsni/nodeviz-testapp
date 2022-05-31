@@ -42,6 +42,5 @@ export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
         console.log('init complete');
     }
     const widget = await registry.get(type);
-    console.log('widget for type', type, 'is', widget);
     return widget;
 }
