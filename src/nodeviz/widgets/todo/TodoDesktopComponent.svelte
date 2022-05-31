@@ -6,7 +6,8 @@
     />
 </div>
 
-<input type="text" bind:value={todoDescription}/>
+<Input type="text" bind:value={todoDescription}/>
+
 <button on:click={addTodo} disabled={!todoDescription}>Add</button>
 
 <div class="todoContainer">
@@ -18,6 +19,7 @@
 </div>
 
 <script lang="ts">
+    import { Input } from "agnostic-svelte";
     import {Node} from 'nodeviz/Node';
 	import {showCompleted} from './store';
     import {
