@@ -1,6 +1,7 @@
 <ul>
 	<li><a href="/pages" target="page_holder">Pages</a></li>
 	<li><a href="/todo" target="page_holder">Todo App</a></li>
+	<li><a href="/portal" target="page_holder">Simple Portal</a></li>
 </ul>
 
 <iframe class="pageContent" title="preview" name="page_holder" />
