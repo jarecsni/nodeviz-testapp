@@ -4,5 +4,6 @@
         "nodez",
         "todos",
         "uuidv"
-    ]
+    ],
+    "jest.jestCommandLine": "jest"
 }
