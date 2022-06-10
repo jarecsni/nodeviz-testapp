@@ -1,6 +1,6 @@
 <Accordion multiple>
     {#each sections as section}
-    <Panel>
+    <Panel open>
         <Header>{section.name}</Header>
         <Content>
           The content for {section.name}.
