@@ -8,15 +8,6 @@
   <Meta
     title="Example/PropertyEditor"
     component={PropertyEditor}
-    argTypes={{
-      obj: {
-        type: {
-          sections: [{type: {
-            name: string
-          }}]
-        }
-      }
-    }}
   />
   
   <!--👇 We create a “template” of how args map to rendering -->
@@ -30,7 +21,7 @@
   <Story
     name='Simple'
     args={{
-      object: {
+      obj: {
         sections: [
           {name: 'First'},
           {name: 'Second'}          

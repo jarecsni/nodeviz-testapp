@@ -31,5 +31,5 @@
             ]
         }
     */
-   const {sections} = object;
+   const {sections} = obj;
 </script>
