@@ -2,7 +2,7 @@
 
 <script>
     import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
-    import PropertyEditor from '../nodeviz/common/PropertyEditor.svelte';
+    import PropertyEditor from '../lib/nodeviz/common/PropertyEditor.svelte';
   </script>
   
   <Meta
@@ -23,8 +23,12 @@
     args={{
       obj: {
         sections: [
-          {name: 'First'},
-          {name: 'Second'}          
+          {name: 'First', properties: {
+            age: {value: 51, description: 'Age of the person'}
+          }},
+          {name: 'Second', properties: {
+            numberOfChildren: {value: 2, description: 'Children'}
+          }}          
         ]
       }
     }}
