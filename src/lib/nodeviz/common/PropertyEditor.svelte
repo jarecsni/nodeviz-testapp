@@ -65,6 +65,9 @@
 		Object.keys(section.properties).forEach(property => {
 			const type = property.constructor.name;
 			// Continue from here: emit editors based on type
+
+			// TODO one idea might be:
+			// https://www.webtips.dev/webtips/svelte/how-to-dynamically-render-components-in-svelte
 		});
 	});
 </script>
