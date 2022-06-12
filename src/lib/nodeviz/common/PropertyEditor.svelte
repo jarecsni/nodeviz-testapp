@@ -68,6 +68,7 @@
 
 			// TODO one idea might be:
 			// https://www.webtips.dev/webtips/svelte/how-to-dynamically-render-components-in-svelte
+			// Also (props): https://svelte.dev/repl/74593f36569a4c268d8a6ab277db34b5?version=3.12.1
 		});
 	});
 </script>
