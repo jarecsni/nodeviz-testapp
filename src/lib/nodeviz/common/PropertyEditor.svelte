@@ -60,4 +60,11 @@
         }
     */
 	const { sections } = obj;
+	const editors = {};
+	sections.forEach(section => {
+		Object.keys(section.properties).forEach(property => {
+			const type = property.constructor.name;
+			// Continue from here: emit editors based on type
+		});
+	});
 </script>

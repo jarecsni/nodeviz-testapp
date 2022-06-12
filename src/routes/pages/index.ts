@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import type {NodeObj} from '../../nodeviz/Node';
+import type {NodeObj} from 'nodeviz/Node';
 import {Page} from '../../nodeviz/widgets/page/Page';
 
 const loadPageComponent = (name:string):Promise<SvelteComponent> => import('./resources/' + name + '.svelte');
