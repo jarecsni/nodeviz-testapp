@@ -24,10 +24,11 @@
       obj: {
         sections: [
           {name: 'First', properties: {
-            age: {value: 51, description: 'Age of the person'}
+            age: {displayName: 'Age of Person', value: 51, description: 'Age of the person'},
+            birthDay: {displayName: 'Date of birth', value: '01/11/1970', description: 'Date of birth'}
           }},
           {name: 'Second', properties: {
-            numberOfChildren: {value: 2, description: 'Children'}
+            numberOfChildren: {displayName: 'Number of children', value: 2, description: 'Children'}
           }}          
         ]
       }
