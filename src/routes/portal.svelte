@@ -8,6 +8,7 @@
         sections: [
           {name: 'First', properties: {
             age: {displayName: 'Age of Person', value: 51, description: 'Age of the person'},
+            salary: {displayName: 'Salary of Person', value: 120100, description: 'Salary of the person'},
             birthDay: {displayName: 'Date of birth', value: '01/11/1970', type: propertyTypes.Date, description: 'Date of birth'}
           }},
           {name: 'Second', properties: {
