@@ -12,7 +12,8 @@
             birthDay: {displayName: 'Date of birth', value: '01/11/1970', type: propertyTypes.Date, description: 'Date of birth'}
           }},
           {name: 'Second', properties: {
-            numberOfChildren: {displayName: 'Number of children', value: 2, description: 'Children'}
+            numberOfChildren: {displayName: 'Number of children', value: 2, description: 'Children'},
+            favouriteMeal: {displayName: 'Favourite meal', value: 'Spaghetti Bolognese', description: 'Stuff you like to stuff yourself with'}
           }}          
         ]
     };

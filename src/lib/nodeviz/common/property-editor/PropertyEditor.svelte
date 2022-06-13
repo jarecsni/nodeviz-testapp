@@ -43,9 +43,11 @@
 	import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 	import NumberEditor from './editors/NumberEditor.svelte';
+	import StringEditor from './editors/StringEditor.svelte';
 	import DateEditor from './editors/DateEditor.svelte';
 	const editorsByType = {
 		Number: NumberEditor,
+		String: StringEditor,
 		Date: DateEditor
 	}
 
