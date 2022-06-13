@@ -1,7 +1,11 @@
-<Textfield 
-    bind:value={value} 
->
-    <IconButton class="material-icons" slot="trailingIcon" size="button">more_horiz</IconButton>
+<Textfield bind:value={value}>
+    <IconButton 
+        class="material-icons" 
+        slot="trailingIcon" 
+        size="button"
+    >
+        more_horiz
+    </IconButton>
 </Textfield>
 
 <script lang="ts">
