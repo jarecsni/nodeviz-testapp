@@ -6,9 +6,9 @@
 				<DataTable style="max-width: 100%;">
 					<Head>
 						<Row>
-							<Cell style="text-align:left">Property</Cell>
-							<Cell style="text-align:left">Value</Cell>
-                            <Cell style="text-align:left">Description</Cell>
+							<Cell>Property</Cell>
+							<Cell>Value</Cell>
+                            <Cell>Description</Cell>
 						</Row>
 					</Head>
 					<Body>
@@ -16,9 +16,10 @@
 							<Row>
 								<Cell>{section.properties[property].displayName}</Cell>
 								<Cell>
-									<Textfield 
-                                        bind:value={section.properties[property].value} 
-                                        type="number" />
+									<svelte:component 
+										this={editors[property]}
+										value={section.properties[property].value}
+									/>
 								</Cell>
                                 <Cell>{section.properties[property].description}</Cell>
 							</Row>
@@ -30,11 +31,24 @@
 	{/each}
 </Accordion>
 
-<script>
+<script context="module" lang="ts">
+	export enum propertyTypes {
+		Number = 'Number',
+		Date = 'Date'
+	}
+</script>
+
+<script lang="ts">
 	export let obj;
 	import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-    import Textfield from '@smui/textfield';
+	import NumberEditor from './editors/NumberEditor.svelte';
+	import DateEditor from './editors/DateEditor.svelte';
+	const editorsByType = {
+		Number: NumberEditor,
+		Date: DateEditor
+	}
+
 	/*
         example object
         {
@@ -59,13 +73,13 @@
             ]
         }
     */
-	const { sections } = obj;
+	const {sections} = obj;
 	const editors = {};
 	sections.forEach(section => {
-		Object.keys(section.properties).forEach(property => {
-			const type = property.constructor.name;
-			// Continue from here: emit editors based on type
-
+		Object.keys(section.properties).forEach(propertyName => {
+			const property = section.properties[propertyName];
+			const type = property.type || property.value.constructor.name;
+			editors[propertyName] = editorsByType[type];
 			// TODO one idea might be:
 			// https://www.webtips.dev/webtips/svelte/how-to-dynamically-render-components-in-svelte
 			// Also (props): https://svelte.dev/repl/74593f36569a4c268d8a6ab277db34b5?version=3.12.1
