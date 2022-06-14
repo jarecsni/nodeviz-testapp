@@ -12,7 +12,9 @@
   bind:open
 >
   <Title id="editor-title">Edit</Title>
-  <Content id="editor-content">Super awesome dialog body text?</Content>
+  <Content id="editor-content">
+    <Textfield textarea bind:value={value}/>
+  </Content>
   <Actions>
     <Button on:click={() => {open = false;}}>
       <Label>Close</Label>
