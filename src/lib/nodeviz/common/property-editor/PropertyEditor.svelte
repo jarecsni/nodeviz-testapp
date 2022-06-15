@@ -45,10 +45,12 @@
 	import NumberEditor from './editors/NumberEditor.svelte';
 	import StringEditor from './editors/StringEditor.svelte';
 	import DateEditor from './editors/DateEditor.svelte';
+	import BooleanEditor from './editors/BooleanEditor.svelte';
 	const editorsByType = {
 		Number: NumberEditor,
 		String: StringEditor,
-		Date: DateEditor
+		Boolean: BooleanEditor,
+		Date: DateEditor,
 	}
 
 	/*
@@ -81,7 +83,7 @@
 		Object.keys(section.properties).forEach(propertyName => {
 			const property = section.properties[propertyName];
 			const type = property.type || property.value.constructor.name;
-			editors[propertyName] = editorsByType[type];
+			editors[propertyName] = editorsByType[type] || StringEditor;
 			// TODO one idea might be:
 			// https://www.webtips.dev/webtips/svelte/how-to-dynamically-render-components-in-svelte
 			// Also (props): https://svelte.dev/repl/74593f36569a4c268d8a6ab277db34b5?version=3.12.1
