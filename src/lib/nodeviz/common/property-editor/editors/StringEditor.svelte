@@ -29,8 +29,9 @@
     import type { MenuSurfaceComponentDev } from '@smui/menu-surface';
     import MenuSurface from '@smui/menu-surface';
     import Paper, { Title, Subtitle, Content } from '@smui/paper';
-    import './global.scss';
     import Button, {Label} from '@smui/button';
+    import './StringEditor.global.scss';
+
     export let value;
     let surface: MenuSurfaceComponentDev;
 </script>
