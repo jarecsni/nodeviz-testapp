@@ -3,32 +3,46 @@
         class="material-icons" 
         slot="trailingIcon" 
         size="button"
-        on:click={()=>{open = true;}}
+        on:click={()=>{surface.setOpen(true);}}
     >
         more_horiz
-    </IconButton>
+    </IconButton>   
 </Textfield>
-<Dialog
-  bind:open
->
-  <Title id="editor-title">Edit</Title>
-  <Content id="editor-content">
-    <Textfield textarea bind:value={value}/>
-  </Content>
-  <Actions>
-    <Button on:click={() => {open = false;}}>
-      <Label>Close</Label>
-    </Button>
-  </Actions>
-</Dialog>
+<div class="surface-wrapper">
+  <MenuSurface bind:this={surface} anchorCorner="BOTTOM_LEFT">
+    <Paper>
+      <Title>Edit</Title>
+      <Content>
+        <div class="string-editor-content">
+          <Textfield textarea bind:value={value} autofocus />
+          <Button on:click={()=>surface.setOpen(false)}><Label>Close</Label></Button>
+        </div>
+      </Content>
+    </Paper>
+  </MenuSurface>
+</div> 
+
 
 <script lang="ts">
-	import Textfield from '@smui/textfield';
+	  import Textfield from '@smui/textfield';
     import IconButton from '@smui/icon-button';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Button, { Label } from '@smui/button';
+    import type { MenuSurfaceComponentDev } from '@smui/menu-surface';
+    import MenuSurface from '@smui/menu-surface';
+    import Paper, { Title, Subtitle, Content } from '@smui/paper';
     import './global.scss';
+    import Button, {Label} from '@smui/button';
     export let value;
-    let open;
+    let surface: MenuSurfaceComponentDev;
 </script>
+
+<style>
+  .surface-wrapper {
+    position: absolute;
+    width: 400px;
+  }
+  .string-editor-content  {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
 
