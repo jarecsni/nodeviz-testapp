@@ -32,9 +32,9 @@
 </Accordion>
 
 <script context="module" lang="ts">
-	export enum propertyTypes {
-		Number = 'Number',
-		Date = 'Date'
+	export const propertyTypes = {
+		Number: 'Number',
+		Date: 'Date'
 	}
 </script>
 
