@@ -1,11 +1,42 @@
+const path = require('path');
+
 module.exports = {
   webpackFinal: async (config) => {
     const svelteLoader = config.module.rules.find( (r) => r.loader && r.loader.includes('svelte-loader'))
     svelteLoader.options.preprocess = require('svelte-preprocess')()
     config.module.rules.push({
       test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader', 'sass-resources-loader'],
-    });
+      use: [
+        {
+          loader: 'style-loader', options: {}
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            localsConvention: 'dashes',
+            importLoaders: 1,
+            sourceMap: true,
+            modules: true
+          }
+        },
+        {
+          loader: 'postcss-loader', options: {
+            sourceMap: true
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true
+          }
+        },
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: './static/resources.scss'
+          }
+        }
+      ]});
     return config;
   },
   "stories": [
