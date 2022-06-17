@@ -1,9 +1,10 @@
-{#if adminMode}
-    <Button>Add Widget</Button>
-{/if}
+<GenericComponentContainer {node} />
 
 
 <script lang="ts">
-	import Button from '@smui/button';
-    export let adminMode:boolean = false;
+	import GenericComponentContainer from '../../nodeviz/GenericComponentContainer.svelte';
+	import { Node } from 'nodeviz/Node';
+    import { PortalHome } from '../../nodeviz/widgets/portal/PortalHome';
+    
+    const node = new Node('Portal', new PortalHome());
 </script>
