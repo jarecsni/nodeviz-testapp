@@ -12,5 +12,3 @@ Placeholder
     }
 </script>
 
-<style>
-</style>

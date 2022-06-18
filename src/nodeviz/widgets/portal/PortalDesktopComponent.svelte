@@ -1,27 +1,48 @@
+
 <h1>Portal App</h1>
 
-<div class="portalContainer">
-    {#each nodes as node (node.id)}
-        <div>
-            <GenericComponentContainer {node}/>
+<IconButton class="material-icons" touch on:click={() => {addDialogueOpen=true}}>add</IconButton>
+
+<Dialog
+	bind:open={addDialogueOpen}
+>
+	<Title>Add Portal Widget</Title>
+	<Content>
+        <div class="dialogueContent">
+            <div>List of widgets</div>
+            <div>Detail panel for selected Widget</div>
         </div>
-    {/each}
+	</Content>
+	<Actions>
+		<Button on:click={()=>{addDialogueOpen=false}}>
+			<Label>Close</Label>
+		</Button>
+	</Actions>
+</Dialog>
+
+<div class="portalContainer">
+	{#each nodes as node (node.id)}
+		<div>
+			<GenericComponentContainer {node} />
+		</div>
+	{/each}
 </div>
 
 <script lang="ts">
-    import {Node} from 'nodeviz/Node';
-    import {
-		onSnapshot,
-        addDoc,
-        updateDoc,
-        doc
-	} from 'firebase/firestore';
-    import {browser} from '$app/env';
-	import {dbRef, db} from './firebase';
-    import GenericComponentContainer from '../../GenericComponentContainer.svelte';
+	import IconButton from '@smui/icon-button';
+    import Dialog, { Title, Content, Actions } from '@smui/dialog';
+    import Button, { Label } from '@smui/button';
+	import { Node } from 'nodeviz/Node';
+	import { onSnapshot, addDoc, updateDoc, doc } from 'firebase/firestore';
+	import { browser } from '$app/env';
+	import { dbRef, db } from './firebase';
+	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
+	import { PortalWidget } from './PortalWidget';
 
-    let loadingData = true;
-    let portalWidgets = [];
+    let addDialogueOpen = false;
+
+	let loadingData = true;
+	let portalWidgets = [];
 	const unsubscribe =
 		browser &&
 		onSnapshot(dbRef, (querySnapshot) => {
@@ -32,27 +53,30 @@
 			});
 			portalWidgets = portalSnapshot;
 			loadingData = false;
-		});    
-    
-    let nodes = [];    
-    $: {
-        nodes = portalWidgets.map(t => new Node('PortalWidget', PortalWidget.valueOf(t)));
-    }
+		});
 
-    async function addTodo() {
-        const portalWidget = new PortalWidget();
-        todoDescription = null;
-        await addDoc(dbRef, {
-				...portalWidget.toJson()
-			});
-    }
+	let nodes = [];
+	$: {
+		nodes = portalWidgets.map((t) => new Node('PortalWidget', PortalWidget.valueOf(t)));
+	}
 
-    async function onTodoUpdated(portalWidget:CustomEvent<PortalWidget>) {
-        await updateDoc(doc(db, 'portal', portalWidget.detail.id), {
+	async function addPortalWidget() {
+		const portalWidget = new PortalWidget();
+		await addDoc(dbRef, {
+			...portalWidget.toJson()
+		});
+	}
+
+	async function onPortalWidgetUpdated(portalWidget: CustomEvent<PortalWidget>) {
+		await updateDoc(doc(db, 'portal', portalWidget.detail.id), {
 			...portalWidget.detail
 		});
-    }
+	}
+
 </script>
 
 <style>
+    .dialogueContent {
+        display: flex;
+    }
 </style>
