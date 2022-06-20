@@ -38,10 +38,12 @@
 	import { dbRef, db } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { PortalWidget } from './PortalWidget';
+	import { getWidgets } from '../WidgetRegistry';
 
     let addDialogueOpen = false;
 
 	let loadingData = true;
+
 	let portalWidgets = [];
 	const unsubscribe =
 		browser &&
@@ -72,6 +74,12 @@
 			...portalWidget.detail
 		});
 	}
+
+	let widgets;
+	getWidgets().then(_widgets => {
+		widgets = _widgets;
+		console.log({widgets});
+	});
 
 </script>
 
