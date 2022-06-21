@@ -17,7 +17,7 @@ const initRegistry = () => {
                 // TODO this could be extracted etc to make it more DRY
                 childWidgets && childWidgets.forEach(childWidget => {
                     childPromises.push(import('./' + w + '/' + childWidget + '/index.ts').then(childModule => {
-                        const childInfo = childModule.getWidgetInfo();
+                        const childInfo = {parent: info.name, ... childModule.getWidgetInfo()};
                         console.log('registering child', childInfo.type);
                         registry.set(w + '/' + (childInfo.type || childWidget), childInfo);  
                     }));      
@@ -52,5 +52,5 @@ export const getWidgets:() => Promise<WidgetInfo[]> = async () => {
         console.log('init complete');
     }
     const widgets = await registry.values();
-    return Array.from(widgets);
+    return Array.from(widgets).filter(w => !w.parent);
 }

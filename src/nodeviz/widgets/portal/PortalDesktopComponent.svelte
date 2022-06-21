@@ -102,13 +102,13 @@
 		});
 	}
 
-	let widgets = [], widgetSelectionIndex, selectedWidget;
+	let widgets = [], widgetSelectionIndex = 0, selectedWidget;
 	getWidgets().then((_widgets) => {
 		widgets = _widgets.map(widget => ({
 			qualifiedName: '@' + widget.package + '/' + widget.name,
 			...widget
 		}));
-		console.log({widgets});
+		selectedWidget = widgets[0].qualifiedName;
 	});
 </script>
 
@@ -116,5 +116,6 @@
 <style>
 	.dialogueContent {
 		display: flex;
+		max-height: 250px;
 	}
 </style>
