@@ -13,7 +13,7 @@
 	<Content>
 		<div class="dialogueContent">
 			<List
-				class="demo-list"
+				class="widgetList"
 				twoLine
 				singleSelection
 				bind:selectedIndex={widgetSelectionIndex}
@@ -27,7 +27,6 @@
 							<PrimaryText>{widget.name}</PrimaryText>
 							<SecondaryText>{widget.package}</SecondaryText>
 						</Text>
-						<Meta class="material-icons">info</Meta>
 					</Item>
 				{/each}
 			</List>
@@ -118,4 +117,9 @@
 		display: flex;
 		max-height: 250px;
 	}
+	* :global(.widgetList) {
+		min-width: 200px;
+		padding-right: 10px;
+	}
 </style>
+
