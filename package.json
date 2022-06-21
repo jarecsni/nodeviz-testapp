@@ -65,6 +65,7 @@
     "@smui/data-table": "^6.0.0-beta.16",
     "@smui/dialog": "^6.0.0-beta.16",
     "@smui/icon-button": "^6.0.0-beta.16",
+    "@smui/list": "^6.0.0-beta.16",
     "@smui/paper": "^6.0.0-beta.16",
     "@smui/switch": "^6.0.0-beta.16",
     "@smui/textfield": "^6.0.0-beta.16",

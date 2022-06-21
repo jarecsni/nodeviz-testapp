@@ -1,20 +1,45 @@
-
 <h1>Portal App</h1>
 
-<IconButton class="material-icons" touch on:click={() => {addDialogueOpen=true}}>add</IconButton>
-
-<Dialog
-	bind:open={addDialogueOpen}
+<IconButton
+	class="material-icons"
+	touch
+	on:click={() => {
+		addDialogueOpen = true;
+	}}>add</IconButton
 >
+
+<Dialog bind:open={addDialogueOpen}>
 	<Title>Add Portal Widget</Title>
 	<Content>
-        <div class="dialogueContent">
-            <div>List of widgets</div>
-            <div>Detail panel for selected Widget</div>
-        </div>
+		<div class="dialogueContent">
+			<List
+				class="demo-list"
+				twoLine
+				singleSelection
+				bind:selectedIndex={widgetSelectionIndex}
+			>
+				{#each widgets as widget}
+					<Item
+						on:SMUI:action={() => (selectedWidget = widget.qualifiedName)}
+						selected={selectedWidget === widget.qualifiedName}
+					>
+						<Text>
+							<PrimaryText>{widget.name}</PrimaryText>
+							<SecondaryText>{widget.package}</SecondaryText>
+						</Text>
+						<Meta class="material-icons">info</Meta>
+					</Item>
+				{/each}
+			</List>
+			<div>Detail panel for selected Widget</div>
+		</div>
 	</Content>
 	<Actions>
-		<Button on:click={()=>{addDialogueOpen=false}}>
+		<Button
+			on:click={() => {
+				addDialogueOpen = false;
+			}}
+		>
 			<Label>Close</Label>
 		</Button>
 	</Actions>
@@ -30,8 +55,10 @@
 
 <script lang="ts">
 	import IconButton from '@smui/icon-button';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Button, { Label } from '@smui/button';
+	import Dialog, { Title, Content, Actions } from '@smui/dialog';
+	import Button, { Label } from '@smui/button';
+	import List, { Item, Graphic, Meta, Text, PrimaryText, SecondaryText } from '@smui/list';
+
 	import { Node } from 'nodeviz/Node';
 	import { onSnapshot, addDoc, updateDoc, doc } from 'firebase/firestore';
 	import { browser } from '$app/env';
@@ -40,7 +67,7 @@
 	import { PortalWidget } from './PortalWidget';
 	import { getWidgets } from '../WidgetRegistry';
 
-    let addDialogueOpen = false;
+	let addDialogueOpen = false;
 
 	let loadingData = true;
 
@@ -75,16 +102,19 @@
 		});
 	}
 
-	let widgets;
-	getWidgets().then(_widgets => {
-		widgets = _widgets;
+	let widgets = [], widgetSelectionIndex, selectedWidget;
+	getWidgets().then((_widgets) => {
+		widgets = _widgets.map(widget => ({
+			qualifiedName: '@' + widget.package + '/' + widget.name,
+			...widget
+		}));
 		console.log({widgets});
 	});
-
 </script>
 
+
 <style>
-    .dialogueContent {
-        display: flex;
-    }
+	.dialogueContent {
+		display: flex;
+	}
 </style>
