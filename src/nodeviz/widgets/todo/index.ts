@@ -2,7 +2,7 @@ import type {WidgetInfo} from '../Widget';
 import TodoDesktopComponent from './TodoDesktopComponent.svelte';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
-    uniquePackageName: 'nodeviz',
+    package: 'nodeviz',
     name: 'todo',
     type: 'TodoHome',
     desktop: {

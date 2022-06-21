@@ -5,7 +5,7 @@ export interface Widget {
 }
 
 export interface WidgetInfo {
-    uniquePackageName: string,
+    package: string,
     name: string,
     type?: string,
     desktop: {
