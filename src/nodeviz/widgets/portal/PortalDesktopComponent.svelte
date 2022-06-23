@@ -12,25 +12,27 @@
 	<Title>Add Portal Widget</Title>
 	<Content>
 		<div class="dialogueContent">
-			<List
-				class="widgetList"
-				twoLine
-				singleSelection
-				bind:selectedIndex={widgetSelectionIndex}
-			>
-				{#each widgets as widget}
-					<Item
-						on:SMUI:action={() => (selectedWidget = widget.qualifiedName)}
-						selected={selectedWidget === widget.qualifiedName}
-					>
-						<Text>
-							<PrimaryText>{widget.name}</PrimaryText>
-							<SecondaryText>{widget.package}</SecondaryText>
-						</Text>
-					</Item>
-				{/each}
-			</List>
-			<div>Detail panel for selected Widget</div>
+			<div class="widgetListHolder">
+				<List
+					class="widgetList"
+					twoLine
+					singleSelection
+					bind:selectedIndex={widgetSelectionIndex}
+				>
+					{#each widgets as widget}
+						<Item
+							on:SMUI:action={() => {selectedWidgetManifest=widget;}}
+							selected={selectedWidgetManifest.qualifiedName === widget.qualifiedName}
+						>
+							<Text>
+								<PrimaryText>{widget.name}</PrimaryText>
+								<SecondaryText>{widget.package}</SecondaryText>
+							</Text>
+						</Item>
+					{/each}
+				</List>
+			</div>
+			<WidgetDetails widget={selectedWidgetManifest}/>
 		</div>
 	</Content>
 	<Actions>
@@ -65,6 +67,7 @@
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { PortalWidget } from './PortalWidget';
 	import { getWidgetManifests, getWidgets } from '../WidgetRegistry';
+	import WidgetDetails from './WidgetDetails.svelte';
 
 	let addDialogueOpen = false;
 
@@ -77,7 +80,7 @@
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				let portalWidget = { ...doc.data(), id: doc.id };
-				portalSnapshot = [...portalSnapshot, portalWidget];
+					portalSnapshot = [...portalSnapshot, portalWidget];
 			});
 			portalWidgets = portalSnapshot;
 			loadingData = false;
@@ -101,13 +104,13 @@
 		});
 	}
 
-	let widgets = [], widgetSelectionIndex = 0, selectedWidget;
+	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest;
 	getWidgetManifests().then((_widgets) => {
 		widgets = _widgets.map(widget => ({
 			qualifiedName: '@' + widget.package + '/' + widget.name,
 			...widget
 		}));
-		selectedWidget = widgets[0].qualifiedName;
+		selectedWidgetManifest = widgets[0];
 	});
 </script>
 
@@ -116,6 +119,9 @@
 	.dialogueContent {
 		display: flex;
 		max-height: 250px;
+	}
+	.widgetListHolder {
+		overflow: auto;
 	}
 	* :global(.widgetList) {
 		min-width: 200px;
