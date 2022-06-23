@@ -64,7 +64,7 @@
 	import { dbRef, db } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { PortalWidget } from './PortalWidget';
-	import { getWidgets } from '../WidgetRegistry';
+	import { getWidgetManifests, getWidgets } from '../WidgetRegistry';
 
 	let addDialogueOpen = false;
 
@@ -102,7 +102,7 @@
 	}
 
 	let widgets = [], widgetSelectionIndex = 0, selectedWidget;
-	getWidgets().then((_widgets) => {
+	getWidgetManifests().then((_widgets) => {
 		widgets = _widgets.map(widget => ({
 			qualifiedName: '@' + widget.package + '/' + widget.name,
 			...widget

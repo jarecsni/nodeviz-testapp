@@ -1,8 +1,11 @@
 import {widgets} from './index';
-import type {WidgetInfo} from './Widget';
+import type {WidgetInfo, WidgetManifest} from './Widget';
 
 const registry = new Map<string, WidgetInfo>();
 let initDone = false;
+
+const manifests:WidgetManifest[] = [];
+let manifestsLoaded = false;
 
 const initRegistry = () => {
     return new Promise((resolve, reject) => {
@@ -36,7 +39,7 @@ const initRegistry = () => {
 export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
     let widget = registry.get(type);
     if (!widget) {
-        let start = new Date().getMilliseconds();
+        let start = performance.now();
         console.log('Loading widget', type);
         const widgetHome = type.substring(0, type.indexOf('/'));
         const childPromises = [];
@@ -53,18 +56,35 @@ export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
             });
         });
         await Promise.all(childPromises);
-        console.log('Loading widget', type, 'done in', (new Date().getMilliseconds() - start), 'ms');
+        console.log('Loading widget', type, 'done in', (Math.round(performance.now() - start)), 'ms');
         return registry.get(type);
     }
     return widget;
 }
 
 export const getWidgets:() => Promise<WidgetInfo[]> = async () => {
+    const start = performance.now();
     if (!initDone) {
         console.log('waiting for registry init');
         await initRegistry();
         console.log('init complete');
     }
     const widgets = await registry.values();
+    console.log('performance:getWidgets', Math.round(performance.now()-start));
     return Array.from(widgets).filter(w => !w.parent);
+}
+
+export const getWidgetManifests: () => Promise<WidgetManifest[]> = async () => {
+    const start = performance.now();
+    if (!manifestsLoaded) {
+        const promises = [];
+        widgets.forEach(w => {
+            promises.push(import('./' + w + '/manifest.json').then(module => {
+                manifests.push(module.default);
+            }));
+        });
+        await Promise.all(promises);
+    }
+    console.log('performance:getWidgetManifests', Math.round(performance.now()-start));
+    return manifests;
 }

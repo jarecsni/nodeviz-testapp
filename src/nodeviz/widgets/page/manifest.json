@@ -1,0 +1,8 @@
+{
+    "package": "nodeviz",
+    "name": "page",
+    "description": "Example widget for page and navigation app",
+    "author": "Johnny Jarecsni",
+    "version": "1.0",
+    "date": "23/06/2022"
+}

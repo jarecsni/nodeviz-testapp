@@ -1,0 +1,8 @@
+{
+    "package": "nodeviz",
+    "name": "portal",
+    "description": "Example widget for loading other widgets",
+    "author": "Johnny Jarecsni",
+    "version": "1.0",
+    "date": "23/06/2022"
+}

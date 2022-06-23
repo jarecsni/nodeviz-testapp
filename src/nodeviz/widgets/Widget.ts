@@ -14,3 +14,12 @@ export interface WidgetInfo {
     },
     widgets?: string[]
 }
+
+export interface WidgetManifest {
+    package: string,
+    name: string,
+    description: string,
+    author: string,
+    version: string,
+    date: string
+}
