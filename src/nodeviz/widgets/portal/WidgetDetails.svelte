@@ -1,4 +1,3 @@
-
 <div class="content">
     <span class="name">{widget.name}</span>
     <span class="package">{widget.package}</span>

@@ -36,11 +36,10 @@
 		</div>
 	</Content>
 	<Actions>
-		<Button
-			on:click={() => {
-				addDialogueOpen = false;
-			}}
-		>
+		<Button on:click={onAddWidget}>
+			<Label>Add Widget</Label>
+		</Button>
+		<Button>
 			<Label>Close</Label>
 		</Button>
 	</Actions>
@@ -112,6 +111,10 @@
 		}));
 		selectedWidgetManifest = widgets[0];
 	});
+
+	function onAddWidget() {
+		
+	}
 </script>
 
 
