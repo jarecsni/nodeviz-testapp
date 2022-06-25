@@ -1,0 +1,1 @@
+<div>Placeholder for SimpleText widget</div>

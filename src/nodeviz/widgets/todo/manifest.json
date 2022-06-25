@@ -1,6 +1,7 @@
 {
     "package": "nodeviz",
     "name": "todo",
+    "type": "TodoHome",
     "description": "Todo widget",
     "author": "Johnny Jarecsni",
     "version": "1.0",

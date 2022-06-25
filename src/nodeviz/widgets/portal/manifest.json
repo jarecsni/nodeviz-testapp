@@ -1,6 +1,7 @@
 {
     "package": "nodeviz",
     "name": "portal",
+    "type": "PortalHome",
     "description": "Example widget for loading other widgets",
     "author": "Johnny Jarecsni",
     "version": "1.0",

@@ -1,11 +1,11 @@
 import type {WidgetInfo} from '../Widget';
-import PageRendererComponent from './PageRendererComponent.svelte';
+import SimpleTextComponent from './SimpleTextComponent.svelte';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
     package: 'nodeviz',
-    name: 'page',
-    type: 'Page',
+    name: 'simpletext',
+    type: 'Text',
     desktop: {
-        renderer: PageRendererComponent
+        renderer: SimpleTextComponent
     }
 });

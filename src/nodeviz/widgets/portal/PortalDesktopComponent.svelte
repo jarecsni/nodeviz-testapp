@@ -65,8 +65,9 @@
 	import { dbRef, db } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { PortalWidget } from './PortalWidget';
-	import { getWidgetManifests, getWidgets } from '../WidgetRegistry';
+	import { getWidget, getWidgetManifests, getWidgets } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
+import type { WidgetManifest } from '../Widget';
 
 	let addDialogueOpen = false;
 
@@ -103,7 +104,7 @@
 		});
 	}
 
-	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest;
+	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest:WidgetManifest;
 	getWidgetManifests().then((_widgets) => {
 		widgets = _widgets.map(widget => ({
 			qualifiedName: '@' + widget.package + '/' + widget.name,
@@ -112,7 +113,8 @@
 		selectedWidgetManifest = widgets[0];
 	});
 
-	function onAddWidget() {
+	async function onAddWidget() {
+		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
 		
 	}
 </script>

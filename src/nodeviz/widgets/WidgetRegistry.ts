@@ -45,13 +45,13 @@ export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
         const childPromises = [];
         await import('./' + widgetHome + '/index.ts').then(module => {
             const info = module.getWidgetInfo();
-            registry.set(widgetHome + '/' + (info.type || widgetHome), info);
+            registry.set(widgetHome + '/' + info.type, info);
             const childWidgets = info.widgets;
             // TODO this could be extracted etc to make it more DRY
             childWidgets && childWidgets.forEach(childWidget => {
                 childPromises.push(import('./' + widgetHome + '/' + childWidget + '/index.ts').then(childModule => {
                     const childInfo = {parent: info.name, ... childModule.getWidgetInfo()};
-                    registry.set(widgetHome + '/' + (childInfo.type || childWidget), childInfo);  
+                    registry.set(widgetHome + '/' + childInfo.type, childInfo);  
                 }));      
             });
         });

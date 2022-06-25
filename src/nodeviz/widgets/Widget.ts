@@ -7,7 +7,7 @@ export interface Widget {
 export interface WidgetInfo {
     package: string,
     name: string,
-    type?: string,
+    type: string,
     parent?: string,
     desktop: {
         renderer: typeof SvelteComponent
@@ -18,6 +18,7 @@ export interface WidgetInfo {
 export interface WidgetManifest {
     package: string,
     name: string,
+    type: string,
     description: string,
     author: string,
     version: string,

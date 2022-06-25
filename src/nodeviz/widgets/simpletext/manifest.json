@@ -1,0 +1,9 @@
+{
+    "package": "nodeviz",
+    "name": "simlpletext",
+    "type": "Text",
+    "description": "Example widget to be used with Portal test app",
+    "author": "Johnny Jarecsni",
+    "version": "1.0",
+    "date": "25/06/2022"
+}
