@@ -7,5 +7,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     type: 'Text',
     desktop: {
         renderer: SimpleTextComponent
-    }
+    },
+    getDefaultNodeObject: () => (new Text())
 });

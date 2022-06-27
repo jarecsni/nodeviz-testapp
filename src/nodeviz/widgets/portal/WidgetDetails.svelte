@@ -19,6 +19,7 @@
     import type { WidgetManifest } from '../Widget';
     export let widget:WidgetManifest = {
         name: '',
+        type: '',
         package: '',
         description: '',
         version: '',

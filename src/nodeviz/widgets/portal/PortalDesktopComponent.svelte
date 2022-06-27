@@ -22,7 +22,7 @@
 					{#each widgets as widget}
 						<Item
 							on:SMUI:action={() => {selectedWidgetManifest=widget;}}
-							selected={selectedWidgetManifest.qualifiedName === widget.qualifiedName}
+							selected={selectedWidgetManifest.package + '/' + selectedWidgetManifest.name === widget.qualifiedName}
 						>
 							<Text>
 								<PrimaryText>{widget.name}</PrimaryText>
@@ -67,7 +67,7 @@
 	import { PortalWidget } from './PortalWidget';
 	import { getWidget, getWidgetManifests, getWidgets } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
-import type { WidgetManifest } from '../Widget';
+	import type { WidgetManifest } from '../Widget';
 
 	let addDialogueOpen = false;
 
@@ -115,7 +115,7 @@ import type { WidgetManifest } from '../Widget';
 
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
-		
+		const nodeObject = widgetInfo.getDefaultNodeObject();
 	}
 </script>
 

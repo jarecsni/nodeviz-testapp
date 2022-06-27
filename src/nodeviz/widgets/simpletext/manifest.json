@@ -1,6 +1,6 @@
 {
     "package": "nodeviz",
-    "name": "simlpletext",
+    "name": "simpletext",
     "type": "Text",
     "description": "Example widget to be used with Portal test app",
     "author": "Johnny Jarecsni",

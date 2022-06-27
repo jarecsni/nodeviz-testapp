@@ -12,7 +12,8 @@ export interface WidgetInfo {
     desktop: {
         renderer: typeof SvelteComponent
     },
-    widgets?: string[]
+    widgets?: string[],
+    getDefaultNodeObject: () => object
 }
 
 export interface WidgetManifest {
