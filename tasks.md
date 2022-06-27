@@ -1,4 +1,12 @@
 
+Mon 27 Jun
+Done:
+Added default node object to widget info to help instantiating new widget.
+Next:
+Remove package from Node (it is not used and will make it harder to do instantiation)
+Also, the whole widget info thing gets messy, will need to think about a cleaner way of doing this in the future.
+
+
 ### Feature: persistence
 #### Tasks
 ##### T1: Add loading/saving todos to firebase
