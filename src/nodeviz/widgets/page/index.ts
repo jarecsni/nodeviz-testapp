@@ -1,4 +1,6 @@
+import { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
+import { Page } from './Page';
 import PageRendererComponent from './PageRendererComponent.svelte';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
@@ -7,5 +9,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     type: 'Page',
     desktop: {
         renderer: PageRendererComponent
-    }
+    },
+    getDefaultNodeObject: () => (new Node('Page', new Page('', ()=>null)))
 });

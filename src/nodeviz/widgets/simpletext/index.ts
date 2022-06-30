@@ -1,3 +1,4 @@
+import { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
 import SimpleTextComponent from './SimpleTextComponent.svelte';
 
@@ -8,5 +9,5 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     desktop: {
         renderer: SimpleTextComponent
     },
-    getDefaultNodeObject: () => (new Text())
+    getDefaultNodeObject: () => (new Node('simpletext', new Text()))
 });

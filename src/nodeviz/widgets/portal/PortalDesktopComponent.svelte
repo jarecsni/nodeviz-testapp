@@ -116,6 +116,7 @@
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
 		const nodeObject = widgetInfo.getDefaultNodeObject();
+		nodes = [...nodes, nodeObject];
 	}
 </script>
 

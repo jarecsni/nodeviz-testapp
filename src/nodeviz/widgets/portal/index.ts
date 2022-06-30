@@ -1,5 +1,7 @@
+import { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
 import PortalDesktopComponent from './PortalDesktopComponent.svelte';
+import { PortalHome } from './PortalHome';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
     package: 'nodeviz',
@@ -10,5 +12,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     },
     widgets: [
         'Details'    
-    ]
+    ],
+    getDefaultNodeObject: () => (new Node('Portal', new PortalHome()))
 });

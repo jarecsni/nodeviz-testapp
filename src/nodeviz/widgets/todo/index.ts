@@ -1,5 +1,7 @@
+import { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
 import TodoDesktopComponent from './TodoDesktopComponent.svelte';
+import { TodoHome } from './TodoHome';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
     package: 'nodeviz',
@@ -10,5 +12,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     },
     widgets: [
         'Details'    
-    ]
+    ],
+    getDefaultNodeObject: () => (new Node('todo', new TodoHome()))
 });
