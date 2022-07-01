@@ -57,52 +57,18 @@
 	import IconButton from '@smui/icon-button';
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
-	import List, { Item, Graphic, Meta, Text, PrimaryText, SecondaryText } from '@smui/list';
+	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
 
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc, updateDoc, doc } from 'firebase/firestore';
+	import { onSnapshot, addDoc } from 'firebase/firestore';
 	import { browser } from '$app/env';
-	import { dbRef, db } from './firebase';
+	import { dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
-	import { PortalWidget } from './PortalWidget';
-	import { getWidget, getWidgetManifests, getWidgets } from '../WidgetRegistry';
+	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
-	import type { WidgetManifest } from '../Widget';
+	import type { NodeObject, WidgetManifest } from '../Widget';
 
 	let addDialogueOpen = false;
-
-	let loadingData = true;
-
-	let portalWidgets = [];
-	const unsubscribe =
-		browser &&
-		onSnapshot(dbRef, (querySnapshot) => {
-			let portalSnapshot = [];
-			querySnapshot.forEach((doc) => {
-				let portalWidget = { ...doc.data(), id: doc.id };
-					portalSnapshot = [...portalSnapshot, portalWidget];
-			});
-			portalWidgets = portalSnapshot;
-			loadingData = false;
-		});
-
-	let nodes = [];
-	$: {
-		nodes = portalWidgets.map((t) => new Node('PortalWidget', PortalWidget.valueOf(t)));
-	}
-
-	async function addPortalWidget() {
-		const portalWidget = new PortalWidget();
-		await addDoc(dbRef, {
-			...portalWidget.toJson()
-		});
-	}
-
-	async function onPortalWidgetUpdated(portalWidget: CustomEvent<PortalWidget>) {
-		await updateDoc(doc(db, 'portal', portalWidget.detail.id), {
-			...portalWidget.detail
-		});
-	}
 
 	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest:WidgetManifest;
 	getWidgetManifests().then((_widgets) => {
@@ -113,11 +79,43 @@
 		selectedWidgetManifest = widgets[0];
 	});
 
+	let loadingData = true;
+
+	let portalWidgets = [];
+	const unsubscribe =
+		browser &&
+		onSnapshot(dbRef, (querySnapshot) => {
+			let portalSnapshot = [];
+			querySnapshot.forEach((doc) => {
+				let portalNode = { ...doc.data(), id: doc.id };
+				portalSnapshot.push(portalNode);
+			});
+			portalWidgets = portalSnapshot;
+			loadingData = false;
+		});
+
+	let nodes = [];
+	$: {
+		nodes = portalWidgets.map((t) => new Node(t.package, {...t}));
+	}
+
+	// async function onPortalWidgetUpdated(portalWidget: CustomEvent<PortalWidget>) {
+	// 	await updateDoc(doc(db, 'portal', portalWidget.detail.id), {
+	// 		...portalWidget.detail
+	// 	});
+	// }
+
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
-		const nodeObject = widgetInfo.getDefaultNodeObject();
+		const nodeObject:Node<NodeObject<object>> = widgetInfo.getDefaultNodeObject();
 		nodes = [...nodes, nodeObject];
+
+		await addDoc(dbRef, {
+			package: nodeObject.package,
+			...nodeObject.value.toJson()
+		});
 	}
+
 </script>
 
 

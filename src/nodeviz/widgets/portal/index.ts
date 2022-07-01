@@ -10,8 +10,5 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     desktop: {
         renderer: PortalDesktopComponent
     },
-    widgets: [
-        'Details'    
-    ],
     getDefaultNodeObject: () => (new Node('Portal', new PortalHome()))
 });

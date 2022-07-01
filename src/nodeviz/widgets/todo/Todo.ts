@@ -1,4 +1,5 @@
 import {v4 as uuidv4} from 'uuid';
+import type { NodeObject } from '../Widget';
 
 export type TodoJson = {
     title:string,
@@ -6,7 +7,7 @@ export type TodoJson = {
     id:string
 }
 
-export class Todo {
+export class Todo implements NodeObject<TodoJson> {
     private _title:string;
     private _done:boolean;
     private _id:string;

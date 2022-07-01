@@ -1,7 +1,12 @@
 
+import type { Node } from 'nodeviz/Node';
 import type {SvelteComponent} from 'svelte';
 
 export interface Widget {
+}
+
+export interface NodeObject<T> {
+    toJson: () => T,
 }
 
 export interface WidgetInfo {
@@ -13,7 +18,7 @@ export interface WidgetInfo {
         renderer: typeof SvelteComponent
     },
     widgets?: string[],
-    getDefaultNodeObject: () => object
+    getDefaultNodeObject: () => Node<NodeObject<object>>
 }
 
 export interface WidgetManifest {
