@@ -13,5 +13,5 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     widgets: [
         'Details'    
     ],
-    getDefaultNodeObject: () => (new Node('todo', new TodoHome()))
+    getDefaultNodeObject: () => (new TodoHome())
 });

@@ -18,7 +18,7 @@ export interface WidgetInfo {
         renderer: typeof SvelteComponent
     },
     widgets?: string[],
-    getDefaultNodeObject: () => Node<NodeObject<object>>
+    getDefaultNodeObject: () => NodeObject<object>
 }
 
 export interface WidgetManifest {

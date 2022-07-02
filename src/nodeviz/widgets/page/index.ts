@@ -10,5 +10,5 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     desktop: {
         renderer: PageRendererComponent
     },
-    getDefaultNodeObject: () => (new Node('Page', new Page('', ()=>null)))
+    getDefaultNodeObject: () => (new Page('', ()=>null))
 });

@@ -58,6 +58,7 @@
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
+	import {v4 as uuidv4} from 'uuid';
 
 	import { Node } from 'nodeviz/Node';
 	import { onSnapshot, addDoc } from 'firebase/firestore';
@@ -94,9 +95,23 @@
 			loadingData = false;
 		});
 
-	let nodes = [];
+	let nodes = [], temp;
 	$: {
-		nodes = portalWidgets.map((t) => new Node(t.package, {...t}));
+		const widgetInfoPromises = [];
+		portalWidgets.forEach(w => {
+			widgetInfoPromises.push(getWidget(w.name + '/' + w.type));
+		});
+		temp = [];
+		Promise.all(widgetInfoPromises).then(() => {
+			widgetInfoPromises.forEach(widgetInfoPromise => {
+				widgetInfoPromise.then(widgetInfo => {
+					const value = widgetInfo.getDefaultNodeObject();
+					temp.push(new Node(widgetInfo.name, value));
+				})
+			});
+		}).then(()=> {
+			nodes = temp;
+		});
 	}
 
 	// async function onPortalWidgetUpdated(portalWidget: CustomEvent<PortalWidget>) {
@@ -107,12 +122,14 @@
 
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
-		const nodeObject:Node<NodeObject<object>> = widgetInfo.getDefaultNodeObject();
-		nodes = [...nodes, nodeObject];
-
+		const nodeObject:NodeObject<object> = widgetInfo.getDefaultNodeObject();
+		//nodes = [...nodes, new Node(widgetInfo.name, nodeObject)];
 		await addDoc(dbRef, {
-			package: nodeObject.package,
-			...nodeObject.value.toJson()
+			package: widgetInfo.package,
+			name: widgetInfo.name,
+			type: widgetInfo.type,
+			id: uuidv4(),
+			...nodeObject.toJson()
 		});
 	}
 

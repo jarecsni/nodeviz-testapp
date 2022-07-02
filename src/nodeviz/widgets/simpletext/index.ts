@@ -10,5 +10,5 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     desktop: {
         renderer: SimpleTextComponent
     },
-    getDefaultNodeObject: () => (new Node('simpletext', new Text('')))
+    getDefaultNodeObject: () => (new Text(''))
 });
