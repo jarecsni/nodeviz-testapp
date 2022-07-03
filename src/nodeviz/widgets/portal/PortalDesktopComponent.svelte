@@ -48,7 +48,7 @@
 <div class="portalContainer">
 	{#each nodes as node (node.id)}
 		<div>
-			<GenericComponentContainer {node} />
+			<GenericComponentContainer {node} on:nodeUpdated={portalNodeUpdated}/>
 		</div>
 	{/each}
 </div>
@@ -61,9 +61,9 @@
 	import {v4 as uuidv4} from 'uuid';
 
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc } from 'firebase/firestore';
+	import { onSnapshot, addDoc, updateDoc, doc } from 'firebase/firestore';
 	import { browser } from '$app/env';
-	import { dbRef } from './firebase';
+	import { db, dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
@@ -88,7 +88,7 @@
 		onSnapshot(dbRef, (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
-				let portalNode = { ...doc.data(), id: doc.id };
+				let portalNode:{id:string,state:unknown,type:string,name:string} = { ...doc.data(), id: doc.id };
 				portalSnapshot.push(portalNode);
 			});
 			portalWidgets = portalSnapshot;
@@ -103,10 +103,14 @@
 		});
 		temp = [];
 		Promise.all(widgetInfoPromises).then(() => {
+			let index = 0;
 			widgetInfoPromises.forEach(widgetInfoPromise => {
 				widgetInfoPromise.then(widgetInfo => {
-					const value = widgetInfo.getDefaultNodeObject();
-					temp.push(new Node(widgetInfo.name, value));
+					const portalNode = portalWidgets[index++];
+					const value = widgetInfo.getDefaultNodeObject().valueOf(
+						portalNode.state
+					);
+					temp.push(new Node(widgetInfo.name, value, portalNode.id));
 				})
 			});
 		}).then(()=> {
@@ -114,22 +118,21 @@
 		});
 	}
 
-	// async function onPortalWidgetUpdated(portalWidget: CustomEvent<PortalWidget>) {
-	// 	await updateDoc(doc(db, 'portal', portalWidget.detail.id), {
-	// 		...portalWidget.detail
-	// 	});
-	// }
-
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
-		const nodeObject:NodeObject<object> = widgetInfo.getDefaultNodeObject();
-		//nodes = [...nodes, new Node(widgetInfo.name, nodeObject)];
+		const nodeObject:NodeObject<object,object> = widgetInfo.getDefaultNodeObject();
 		await addDoc(dbRef, {
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
 			id: uuidv4(),
-			...nodeObject.toJson()
+			state: {...nodeObject.toJson()}
+		});
+	}
+
+	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject<object,object>>>) {
+		await updateDoc(doc(db, 'portal', node.detail.id), {
+			state: {...node.detail.value.toJson()}
 		});
 	}
 

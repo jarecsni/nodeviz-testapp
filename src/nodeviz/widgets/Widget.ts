@@ -5,8 +5,9 @@ import type {SvelteComponent} from 'svelte';
 export interface Widget {
 }
 
-export interface NodeObject<T> {
-    toJson: () => T,
+export interface NodeObject<K,T> {
+    toJson: () => T
+    valueOf: (t:T) => K
 }
 
 export interface WidgetInfo {
