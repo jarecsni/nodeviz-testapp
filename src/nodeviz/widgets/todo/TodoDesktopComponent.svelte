@@ -40,7 +40,7 @@
 			let todosSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				let todo = { ...doc.data(), id: doc.id };
-				todosSnapshot = [...todosSnapshot, todo];
+				todosSnapshot.push(todo);
 			});
 			todos = todosSnapshot;
 			loadingData = false;
@@ -49,7 +49,7 @@
     let todoDescription;
     let nodes = [];    
     $: {
-        nodes = todos.map(t => new Node('Todo', Todo.valueOf(t)));
+        nodes = todos.map(t => new Node({widgetName: '@nodeviz/todoDetails', value: Todo.valueOf(t), id: t.id}));
     }
 
     async function addTodo() {

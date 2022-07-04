@@ -7,7 +7,7 @@ export type TodoJson = {
     id:string
 }
 
-export class Todo implements NodeObject<TodoJson> {
+export class Todo implements NodeObject {
     private _title:string;
     private _done:boolean;
     private _id:string;

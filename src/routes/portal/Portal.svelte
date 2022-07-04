@@ -6,5 +6,5 @@
 	import { Node } from 'nodeviz/Node';
     import { PortalHome } from '../../nodeviz/widgets/portal/PortalHome';
     
-    const node = new Node('Portal', new PortalHome());
+    const node = new Node({widgetName: '@nodeviz/portal', value: new PortalHome()});
 </script>
