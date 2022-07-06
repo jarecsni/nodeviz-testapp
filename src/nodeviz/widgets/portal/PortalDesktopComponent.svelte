@@ -61,7 +61,7 @@
 	import {v4 as uuidv4} from 'uuid';
 
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc, updateDoc, doc } from 'firebase/firestore';
+	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy } from 'firebase/firestore';
 	import { browser } from '$app/env';
 	import { db, dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
@@ -85,7 +85,7 @@
 	let portalWidgets = [];
 	const unsubscribe =
 		browser &&
-		onSnapshot(dbRef, (querySnapshot) => {
+		onSnapshot(query(dbRef, orderBy("createdAt")), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				let portalNode:{id:string,state:unknown,type:string,name:string} = { ...doc.data(), id: doc.id };
@@ -126,7 +126,8 @@
 			name: widgetInfo.name,
 			type: widgetInfo.type,
 			id: uuidv4(),
-			state: {...nodeObject.toJson()}
+			state: {...nodeObject.toJson()},
+			createdAt: new Date()
 		});
 	}
 
