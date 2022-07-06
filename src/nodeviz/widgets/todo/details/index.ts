@@ -1,4 +1,5 @@
 import type {WidgetInfo} from '../../Widget';
+import { Todo } from '../Todo';
 import DetailsDesktopComponent from './DetailsDesktopComponent.svelte';
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
@@ -7,5 +8,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     type: 'Todo',
     desktop: {
         renderer: DetailsDesktopComponent
-    }
+    },
+    getDefaultNodeObject: () => (new Todo(''))
 });

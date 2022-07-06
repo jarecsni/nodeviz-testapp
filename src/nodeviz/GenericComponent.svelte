@@ -1,6 +1,6 @@
 {#await widgetPromise then widget}
     {#if widget === undefined} 
-        <p>Could not retrieve the widget for the type '{node.type}'</p>
+        <p>Could not retrieve the widget for the type '{node.widgetName}'</p>
     {:else}
         <svelte:component 
             this={widget.desktop.renderer} 
@@ -18,5 +18,5 @@
 
     export let node:Node<object>;
     export let context:Context;
-    let widgetPromise = getWidget(node.type);
+    let widgetPromise = getWidget(node.widgetName);
 </script>

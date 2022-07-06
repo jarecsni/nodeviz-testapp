@@ -4,7 +4,7 @@ interface TextJson {
     value: string
 }
 
-export class Text implements NodeObject<Text, TextJson> {
+export class Text implements NodeObject {
     private _value:string;
     constructor(value:string) {
         this._value = value;

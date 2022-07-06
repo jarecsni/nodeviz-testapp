@@ -5,10 +5,12 @@ import type {SvelteComponent} from 'svelte';
 export interface Widget {
 }
 
-export interface NodeObject<K,T> {
-    toJson: () => T
-    valueOf: (t:T) => K
+export interface NodeObject {
+    toJson: () => object
+    valueOf: (o:object) => object
 }
+
+export const getQualifiedName = (widgetInfo: WidgetInfo):string => ('@' + widgetInfo.package + '/' + widgetInfo.name);
 
 export interface WidgetInfo {
     package: string,
@@ -19,7 +21,7 @@ export interface WidgetInfo {
         renderer: typeof SvelteComponent
     },
     widgets?: string[],
-    getDefaultNodeObject: () => NodeObject<object>
+    getDefaultNodeObject: () => NodeObject
 }
 
 export interface WidgetManifest {

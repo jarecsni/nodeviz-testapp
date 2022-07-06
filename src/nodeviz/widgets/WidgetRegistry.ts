@@ -14,13 +14,13 @@ const initRegistry = () => {
         widgets.forEach(w => {
             promises.push(import('./' + w + '/index.ts').then(module => {
                 const info = module.getWidgetInfo();
-                registry.set(w + '/' + (info.type || w), info);
+                registry.set('@' + info.package + '/' + info.name, info);
                 const childWidgets = info.widgets;
                 // TODO this could be extracted etc to make it more DRY
                 childWidgets && childWidgets.forEach(childWidget => {
                     childPromises.push(import('./' + w + '/' + childWidget + '/index.ts').then(childModule => {
                         const childInfo = {parent: info.name, ... childModule.getWidgetInfo()};
-                        registry.set(w + '/' + (childInfo.type || childWidget), childInfo);  
+                        registry.set('@' + childInfo.package + '/' + childInfo.name, childInfo);  
                     }));      
                 });
             }));
@@ -41,17 +41,17 @@ export const getWidget:(string)=>Promise<WidgetInfo> = async (type:string) => {
     if (!widget) {
         let start = performance.now();
         console.log('Loading widget', type);
-        const widgetHome = type.substring(0, type.indexOf('/'));
+        const widgetHome = type.substring(type.indexOf('/') + 1);
         const childPromises = [];
         await import('./' + widgetHome + '/index.ts').then(module => {
             const info = module.getWidgetInfo();
-            registry.set(widgetHome + '/' + info.type, info);
+            registry.set('@' + info.package + '/' + info.name, info);
             const childWidgets = info.widgets;
             // TODO this could be extracted etc to make it more DRY
             childWidgets && childWidgets.forEach(childWidget => {
                 childPromises.push(import('./' + widgetHome + '/' + childWidget + '/index.ts').then(childModule => {
                     const childInfo = {parent: info.name, ... childModule.getWidgetInfo()};
-                    registry.set(widgetHome + '/' + childInfo.type, childInfo);  
+                    registry.set('@' + childInfo.package + '/' + childInfo.name, childInfo);  
                 }));      
             });
         });

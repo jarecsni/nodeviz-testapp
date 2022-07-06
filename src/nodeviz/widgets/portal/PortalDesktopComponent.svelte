@@ -67,7 +67,7 @@
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
-	import type { NodeObject, WidgetManifest } from '../Widget';
+	import { getQualifiedName, type NodeObject, type WidgetManifest } from '../Widget';
 
 	let addDialogueOpen = false;
 
@@ -99,7 +99,7 @@
 	$: {
 		const widgetInfoPromises = [];
 		portalWidgets.forEach(w => {
-			widgetInfoPromises.push(getWidget(w.name + '/' + w.type));
+			widgetInfoPromises.push(getWidget(getQualifiedName(w)));
 		});
 		temp = [];
 		Promise.all(widgetInfoPromises).then(() => {
@@ -110,7 +110,7 @@
 					const value = widgetInfo.getDefaultNodeObject().valueOf(
 						portalNode.state
 					);
-					temp.push(new Node(widgetInfo.name, value, portalNode.id));
+					temp.push(new Node({widgetName: getQualifiedName(widgetInfo), value, id: portalNode.id}));
 				})
 			});
 		}).then(()=> {
@@ -120,7 +120,7 @@
 
 	async function onAddWidget() {
 		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
-		const nodeObject:NodeObject<object,object> = widgetInfo.getDefaultNodeObject();
+		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
 		await addDoc(dbRef, {
 			package: widgetInfo.package,
 			name: widgetInfo.name,
@@ -131,7 +131,7 @@
 		});
 	}
 
-	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject<object,object>>>) {
+	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject>>) {
 		await updateDoc(doc(db, 'portal', node.detail.id), {
 			state: {...node.detail.value.toJson()}
 		});
