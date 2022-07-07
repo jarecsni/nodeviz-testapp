@@ -61,13 +61,16 @@
 	import {v4 as uuidv4} from 'uuid';
 
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy } from 'firebase/firestore';
+	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where } from 'firebase/firestore';
 	import { browser } from '$app/env';
 	import { db, dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
-	import { getQualifiedName, type NodeObject, type WidgetManifest } from '../Widget';
+	import { getQualifiedName, type NodeObject, type WidgetInfo, type WidgetManifest } from '../Widget';
+	import type { PortalHome } from './PortalHome';
+
+	export let node:Node<PortalHome>;
 
 	let addDialogueOpen = false;
 
@@ -85,7 +88,7 @@
 	let portalWidgets = [];
 	const unsubscribe =
 		browser &&
-		onSnapshot(query(dbRef, orderBy("createdAt")), (querySnapshot) => {
+		onSnapshot(query(dbRef, where('owningNodeId', '==', node.id), orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				let portalNode:{id:string,state:unknown,type:string,name:string} = { ...doc.data(), id: doc.id };
@@ -95,13 +98,14 @@
 			loadingData = false;
 		});
 
-	let nodes = [], temp;
+	let nodes, temp;
 	$: {
 		const widgetInfoPromises = [];
 		portalWidgets.forEach(w => {
 			widgetInfoPromises.push(getWidget(getQualifiedName(w)));
 		});
 		temp = [];
+		nodes = [];
 		Promise.all(widgetInfoPromises).then(() => {
 			let index = 0;
 			widgetInfoPromises.forEach(widgetInfoPromise => {
@@ -119,9 +123,12 @@
 	}
 
 	async function onAddWidget() {
-		const widgetInfo = await getWidget(selectedWidgetManifest.name + '/' + selectedWidgetManifest.type);
+		// FIXME get the manifest and widget info typing right (add to board)
+		// @ts-ignore 
+		const widgetInfo = await getWidget(getQualifiedName(selectedWidgetManifest));
 		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
 		await addDoc(dbRef, {
+			owningNodeId: node.id,
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
