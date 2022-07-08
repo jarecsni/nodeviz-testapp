@@ -72,7 +72,7 @@
     "@storybook/addon-svelte-csf": "^2.0.4",
     "firebase": "^9.8.4",
     "invertly": "^1.0.0",
-    "nodeviz": "0.1.0",
+    "nodeviz": "0.1.1",
     "rxfire": "^6.0.3",
     "rxjs": "^7.5.5",
     "smui-theme": "^6.0.0-beta.16",

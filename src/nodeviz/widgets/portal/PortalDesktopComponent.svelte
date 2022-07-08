@@ -88,7 +88,7 @@
 	let portalWidgets = [];
 	const unsubscribe =
 		browser &&
-		onSnapshot(query(dbRef, where('owningNodeId', '==', node.id), orderBy('createdAt')), (querySnapshot) => {
+		onSnapshot(query(dbRef, where('level', '==', node.value.level), orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				let portalNode:{id:string,state:unknown,type:string,name:string} = { ...doc.data(), id: doc.id };
@@ -127,8 +127,11 @@
 		// @ts-ignore 
 		const widgetInfo = await getWidget(getQualifiedName(selectedWidgetManifest));
 		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
+		if (getQualifiedName(widgetInfo) == '@nodeviz/portal') {
+			(nodeObject as PortalHome).level ++;
+		}
 		await addDoc(dbRef, {
-			owningNodeId: node.id,
+			level: node.value.level,
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
