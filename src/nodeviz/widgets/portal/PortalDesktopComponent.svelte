@@ -45,15 +45,21 @@
 	</Actions>
 </Dialog>
 
-<div class="portalContainer">
-	{#each nodes as node (node.id)}
-		<div>
-			<GenericComponentContainer {node} on:nodeUpdated={portalNodeUpdated}/>
-		</div>
-	{/each}
+<div class="main">
+	{#if node.value.level == 0}
+	<WidgetNavigator/>
+	{/if}
+	<div class="portalContainer">
+		{#each nodes as node (node.id)}
+			<div>
+				<GenericComponentContainer {node} on:nodeUpdated={portalNodeUpdated}/>
+			</div>
+		{/each}
+	</div>
 </div>
 
 <script lang="ts">
+	import WidgetNavigator from './WidgetNavigator.svelte';
 	import IconButton from '@smui/icon-button';
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
@@ -69,6 +75,7 @@
 	import WidgetDetails from './WidgetDetails.svelte';
 	import { getQualifiedName, type NodeObject, type WidgetInfo, type WidgetManifest } from '../Widget';
 	import type { PortalHome } from './PortalHome';
+import { lastValueFrom } from 'rxjs';
 
 	export let node:Node<PortalHome>;
 
@@ -151,6 +158,9 @@
 
 
 <style>
+	.main {
+		display: flex;
+	}
 	.dialogueContent {
 		display: flex;
 		max-height: 250px;
