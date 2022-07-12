@@ -75,7 +75,6 @@
 	import WidgetDetails from './WidgetDetails.svelte';
 	import { getQualifiedName, type NodeObject, type WidgetInfo, type WidgetManifest } from '../Widget';
 	import type { PortalHome } from './PortalHome';
-import { lastValueFrom } from 'rxjs';
 
 	export let node:Node<PortalHome>;
 
@@ -90,15 +89,17 @@ import { lastValueFrom } from 'rxjs';
 		selectedWidgetManifest = widgets[0];
 	});
 
-	let loadingData = true;
-
+	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string};
 	let portalWidgets = [];
-	const unsubscribe =
+	const unsubscribe = 
 		browser &&
-		onSnapshot(query(dbRef, where('level', '==', node.value.level), orderBy('createdAt')), (querySnapshot) => {
+		onSnapshot(query(dbRef, 
+			where('nameSpace', '==', node.value.nameSpace), 
+			where('parentId', '==', node.value.id),
+			orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
-				let portalNode:{id:string,state:unknown,type:string,name:string} = { ...doc.data(), id: doc.id };
+				portalNode = { ...doc.data(), id: doc.id };
 				portalSnapshot.push(portalNode);
 			});
 			portalWidgets = portalSnapshot;
@@ -121,7 +122,8 @@ import { lastValueFrom } from 'rxjs';
 					const value = widgetInfo.getDefaultNodeObject().valueOf(
 						portalNode.state
 					);
-					temp.push(new Node({widgetName: getQualifiedName(widgetInfo), value, id: portalNode.id}));
+					const qualName = getQualifiedName(widgetInfo);
+					temp.push(new Node({widgetName: qualName, value, id: portalNode.id}));
 				})
 			});
 		}).then(()=> {
@@ -132,17 +134,23 @@ import { lastValueFrom } from 'rxjs';
 	async function onAddWidget() {
 		// FIXME get the manifest and widget info typing right (add to board)
 		// @ts-ignore 
-		const widgetInfo = await getWidget(getQualifiedName(selectedWidgetManifest));
+		const qualifiedName = getQualifiedName(selectedWidgetManifest);
+		const widgetInfo = await getWidget(qualifiedName);
 		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
-		if (getQualifiedName(widgetInfo) == '@nodeviz/portal') {
-			(nodeObject as PortalHome).level ++;
+		const id = uuidv4();
+		// urgh this is not going to be nice
+		if (qualifiedName === '@nodeviz/portal') {
+			(nodeObject as PortalHome).nameSpace = node.value.nameSpace;
+			(nodeObject as PortalHome).id = id;
 		}
+
 		await addDoc(dbRef, {
-			level: node.value.level,
+			nameSpace: node.value.nameSpace,
+			parentId: node.value.id,
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
-			id: uuidv4(),
+			id,
 			state: {...nodeObject.toJson()},
 			createdAt: new Date()
 		});
