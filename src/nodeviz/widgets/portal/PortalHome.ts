@@ -2,10 +2,8 @@ import type { NodeObject } from '../Widget';
 
 export class PortalHome implements NodeObject {
     private _nameSpace:string;
-    private _id:string;
-    constructor(nameSpace:string, id:string) {
+    constructor(nameSpace:string) {
         this._nameSpace = nameSpace;
-        this._id = id;
     }
     get nameSpace() {
         return this._nameSpace;
@@ -13,16 +11,10 @@ export class PortalHome implements NodeObject {
     set nameSpace(nameSpace: string) {
         this._nameSpace = nameSpace;
     }
-    get id() {
-        return this._id;
-    }
-    set id(id: string) {
-        this._id = id;
-    }
     toJson() {
-        return ({nameSpace: this.nameSpace, id: this.id});
+        return ({nameSpace: this.nameSpace});
     } 
     valueOf(o: PortalHome) {
-        return (new PortalHome(o.nameSpace, o.id));
+        return (new PortalHome(o.nameSpace));
     } 
 }

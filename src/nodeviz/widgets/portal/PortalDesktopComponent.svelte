@@ -46,7 +46,7 @@
 </Dialog>
 
 <div class="main">
-	{#if node.value.level == 0}
+	{#if node.id == 'root'}
 	<WidgetNavigator/>
 	{/if}
 	<div class="portalContainer">
@@ -89,17 +89,17 @@
 		selectedWidgetManifest = widgets[0];
 	});
 
-	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string};
+	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string,dbid:string};
 	let portalWidgets = [];
 	const unsubscribe = 
 		browser &&
 		onSnapshot(query(dbRef, 
 			where('nameSpace', '==', node.value.nameSpace), 
-			where('parentId', '==', node.value.id),
+			where('parentId', '==', node.id),
 			orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
-				portalNode = { ...doc.data(), id: doc.id };
+				portalNode = { ...doc.data(), dbid: doc.id };
 				portalSnapshot.push(portalNode);
 			});
 			portalWidgets = portalSnapshot;
@@ -119,6 +119,7 @@
 			widgetInfoPromises.forEach(widgetInfoPromise => {
 				widgetInfoPromise.then(widgetInfo => {
 					const portalNode = portalWidgets[index++];
+					console.log({portalNode});
 					const value = widgetInfo.getDefaultNodeObject().valueOf(
 						portalNode.state
 					);
@@ -138,15 +139,16 @@
 		const widgetInfo = await getWidget(qualifiedName);
 		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
 		const id = uuidv4();
-		// urgh this is not going to be nice
+		console.log('generated ID: ', id);
+
+		// FIXME think about a different way to achieve this
 		if (qualifiedName === '@nodeviz/portal') {
 			(nodeObject as PortalHome).nameSpace = node.value.nameSpace;
-			(nodeObject as PortalHome).id = id;
 		}
 
 		await addDoc(dbRef, {
 			nameSpace: node.value.nameSpace,
-			parentId: node.value.id,
+			parentId: node.id,
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
@@ -157,7 +159,7 @@
 	}
 
 	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject>>) {
-		await updateDoc(doc(db, 'portal', node.detail.id), {
+		await updateDoc(doc(db, 'portal', node.detail.dbid), {
 			state: {...node.detail.value.toJson()}
 		});
 	}
