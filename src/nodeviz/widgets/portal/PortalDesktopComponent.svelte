@@ -89,7 +89,7 @@
 		selectedWidgetManifest = widgets[0];
 	});
 
-	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string,dbid:string};
+	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string};
 	let portalWidgets = [];
 	const unsubscribe = 
 		browser &&
@@ -99,7 +99,7 @@
 			orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
-				portalNode = { ...doc.data(), dbid: doc.id };
+				portalNode = { ...doc.data(), id: doc.id };
 				portalSnapshot.push(portalNode);
 			});
 			portalWidgets = portalSnapshot;
@@ -138,9 +138,7 @@
 		const qualifiedName = getQualifiedName(selectedWidgetManifest);
 		const widgetInfo = await getWidget(qualifiedName);
 		const nodeObject:NodeObject = widgetInfo.getDefaultNodeObject();
-		const id = uuidv4();
-		console.log('generated ID: ', id);
-
+		
 		// FIXME think about a different way to achieve this
 		if (qualifiedName === '@nodeviz/portal') {
 			(nodeObject as PortalHome).nameSpace = node.value.nameSpace;
@@ -152,14 +150,13 @@
 			package: widgetInfo.package,
 			name: widgetInfo.name,
 			type: widgetInfo.type,
-			id,
 			state: {...nodeObject.toJson()},
 			createdAt: new Date()
 		});
 	}
 
 	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject>>) {
-		await updateDoc(doc(db, 'portal', node.detail.dbid), {
+		await updateDoc(doc(db, 'portal', node.detail.id), {
 			state: {...node.detail.value.toJson()}
 		});
 	}
