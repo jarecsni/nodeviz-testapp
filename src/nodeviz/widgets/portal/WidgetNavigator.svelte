@@ -7,7 +7,7 @@
 
 <script lang="ts">
 	import WidgetNavigatorTreeBranch from './WidgetNavigatorTreeBranch.svelte';
-    import { TreeBranch, TreeView } from "svelte-tree-view-component";
+    import { TreeBranch, TreeView } from "nodeviz/components/treeview";
 	import { onSnapshot, doc, query, orderBy, where } from 'firebase/firestore';
 	import { browser } from '$app/env';
 	import { dbRef } from './firebase';
