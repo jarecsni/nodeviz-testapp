@@ -1,15 +1,29 @@
 
-<TreeView >
-    <TreeBranch rootContent="Something">
-        <TreeLeaf>JavaScript</TreeLeaf>
-        <TreeLeaf>C#</TreeLeaf>
-    </TreeBranch>
-    <TreeBranch>
-        <TreeLeaf>Svelte</TreeLeaf>
-        <TreeLeaf>React</TreeLeaf>
+<TreeView>
+    <TreeBranch rootContent="/">
+        <WidgetNavigatorTreeBranch parentId="root" {nodes}/>
     </TreeBranch>
 </TreeView>
 
 <script lang="ts">
-    import { TreeView, TreeBranch, TreeLeaf } from "svelte-tree-view-component";
+	import WidgetNavigatorTreeBranch from './WidgetNavigatorTreeBranch.svelte';
+    import { TreeBranch, TreeView } from "svelte-tree-view-component";
+	import { onSnapshot, doc, query, orderBy, where } from 'firebase/firestore';
+	import { browser } from '$app/env';
+	import { dbRef } from './firebase';
+
+    export let nameSpace:string;
+
+    let portalSnapshot, nodes;
+    const unsubscribe = 
+		browser &&
+		onSnapshot(query(dbRef, 
+			where('nameSpace', '==', nameSpace)),
+		    (querySnapshot) => {
+			    portalSnapshot = [];
+			    querySnapshot.forEach((doc) => {
+				    portalSnapshot.push({ ...doc.data(), id: doc.id });
+                });
+                nodes = portalSnapshot;
+            });
 </script>

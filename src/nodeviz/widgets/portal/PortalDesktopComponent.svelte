@@ -1,54 +1,53 @@
-<h1>Portal App</h1>
-
-<IconButton
-	class="material-icons"
-	touch
-	on:click={() => {
-		addDialogueOpen = true;
-	}}>add</IconButton
->
-
-<Dialog bind:open={addDialogueOpen}>
-	<Title>Add Portal Widget</Title>
-	<Content>
-		<div class="dialogueContent">
-			<div class="widgetListHolder">
-				<List
-					class="widgetList"
-					twoLine
-					singleSelection
-					bind:selectedIndex={widgetSelectionIndex}
-				>
-					{#each widgets as widget}
-						<Item
-							on:SMUI:action={() => {selectedWidgetManifest=widget;}}
-							selected={selectedWidgetManifest.package + '/' + selectedWidgetManifest.name === widget.qualifiedName}
-						>
-							<Text>
-								<PrimaryText>{widget.name}</PrimaryText>
-								<SecondaryText>{widget.package}</SecondaryText>
-							</Text>
-						</Item>
-					{/each}
-				</List>
-			</div>
-			<WidgetDetails widget={selectedWidgetManifest}/>
-		</div>
-	</Content>
-	<Actions>
-		<Button on:click={onAddWidget}>
-			<Label>Add Widget</Label>
-		</Button>
-		<Button>
-			<Label>Close</Label>
-		</Button>
-	</Actions>
-</Dialog>
-
 <div class="main">
 	{#if node.id == 'root'}
-	<WidgetNavigator/>
+		<WidgetNavigator nameSpace={node.value.nameSpace}/>
 	{/if}
+
+	<IconButton
+		class="material-icons"
+		touch
+		on:click={() => {
+			addDialogueOpen = true;
+		}}>add</IconButton
+	>
+
+	<Dialog bind:open={addDialogueOpen}>
+		<Title>Add Portal Widget</Title>
+		<Content>
+			<div class="dialogueContent">
+				<div class="widgetListHolder">
+					<List
+						class="widgetList"
+						twoLine
+						singleSelection
+						bind:selectedIndex={widgetSelectionIndex}
+					>
+						{#each widgets as widget}
+							<Item
+								on:SMUI:action={() => {selectedWidgetManifest=widget;}}
+								selected={selectedWidgetManifest.package + '/' + selectedWidgetManifest.name === widget.qualifiedName}
+							>
+								<Text>
+									<PrimaryText>{widget.name}</PrimaryText>
+									<SecondaryText>{widget.package}</SecondaryText>
+								</Text>
+							</Item>
+						{/each}
+					</List>
+				</div>
+				<WidgetDetails widget={selectedWidgetManifest}/>
+			</div>
+		</Content>
+		<Actions>
+			<Button on:click={onAddWidget}>
+				<Label>Add Widget</Label>
+			</Button>
+			<Button>
+				<Label>Close</Label>
+			</Button>
+		</Actions>
+	</Dialog>
+
 	<div class="portalContainer">
 		{#each nodes as node (node.id)}
 			<div>
@@ -56,6 +55,7 @@
 			</div>
 		{/each}
 	</div>
+
 </div>
 
 <script lang="ts">
@@ -64,8 +64,7 @@
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
-	import {v4 as uuidv4} from 'uuid';
-
+	
 	import { Node } from 'nodeviz/Node';
 	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where } from 'firebase/firestore';
 	import { browser } from '$app/env';
@@ -99,8 +98,7 @@
 			orderBy('createdAt')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
-				portalNode = { ...doc.data(), id: doc.id };
-				portalSnapshot.push(portalNode);
+				portalSnapshot.push({ ...doc.data(), id: doc.id });
 			});
 			portalWidgets = portalSnapshot;
 			loadingData = false;
@@ -164,6 +162,11 @@
 
 
 <style>
+	.main > :global(.tree > li) {
+		width: 150px;
+		height: 300px;
+		overflow: scroll;
+	}
 	.main {
 		display: flex;
 	}
