@@ -119,7 +119,6 @@
 			widgetInfoPromises.forEach(widgetInfoPromise => {
 				widgetInfoPromise.then(widgetInfo => {
 					const portalNode = portalWidgets[index++];
-					console.log({portalNode});
 					const value = widgetInfo.getDefaultNodeObject().valueOf(
 						portalNode.state
 					);
