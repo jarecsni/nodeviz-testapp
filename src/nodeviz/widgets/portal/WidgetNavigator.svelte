@@ -7,7 +7,6 @@
 </div>
 
 <script lang="ts">
-	import {convertJSON} from 'nodeviz/Node';
 	import WidgetNavigatorTreeBranch from './WidgetNavigatorTreeBranch.svelte';
     import { TreeBranch, TreeView } from "nodeviz/components/treeview";
 	import { onSnapshot, doc, query, orderBy, where } from 'firebase/firestore';
