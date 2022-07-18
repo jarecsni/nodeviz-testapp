@@ -163,9 +163,7 @@
 
 <style>
 	.main > :global(.tree > li) {
-		width: 150px;
 		height: 300px;
-		overflow: scroll;
 	}
 	.main {
 		display: flex;

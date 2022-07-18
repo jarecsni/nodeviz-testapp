@@ -1,11 +1,13 @@
-
-<TreeView>
-    <TreeBranch rootContent="/">
-        <WidgetNavigatorTreeBranch parentId="root" {nodes}/>
-    </TreeBranch>
-</TreeView>
+<div class="container">
+	<TreeView>
+		<TreeBranch rootContent="/">
+			<WidgetNavigatorTreeBranch parentId="root" {nodes}/>
+		</TreeBranch>
+	</TreeView>
+</div>
 
 <script lang="ts">
+	import {convertJSON} from 'nodeviz/Node';
 	import WidgetNavigatorTreeBranch from './WidgetNavigatorTreeBranch.svelte';
     import { TreeBranch, TreeView } from "nodeviz/components/treeview";
 	import { onSnapshot, doc, query, orderBy, where } from 'firebase/firestore';
@@ -27,3 +29,10 @@
                 nodes = portalSnapshot;
             });
 </script>
+
+<style>
+	.container {
+		width: 200px;
+		overflow: scroll;
+	}
+</style>
