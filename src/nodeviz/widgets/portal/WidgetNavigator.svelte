@@ -1,5 +1,5 @@
 <div class="container">
-	<TreeView>
+	<TreeView iconBackgroundColor="grey" iconColor="lightgrey">
 		<TreeBranch rootContent="/">
 			<WidgetNavigatorTreeBranch parentId="root" {nodes}/>
 		</TreeBranch>
