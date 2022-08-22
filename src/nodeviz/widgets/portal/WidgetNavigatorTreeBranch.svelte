@@ -2,11 +2,15 @@
 {#each nodes as node (node.id) }
     {#if node.parentId == parentId }
         {#if node.name == 'portal'}
-            <TreeBranch rootContent={node.name}>
+            <TreeBranch rootContent={node.name} onClick={()=>{console.log('click on portal node',node.name + '@' + parentId)}}>
                 <WidgetNavigatorTreeBranch {nodes} parentId={node.id}/>
             </TreeBranch>
         {:else}
-            <TreeLeaf><div on:click={()=>{console.log('click on',node.name + '@' + parentId)}}>{node.name}</div></TreeLeaf>
+            <TreeLeaf onClick={()=>{console.log('clicked on leaf',node.name + '@' + parentId)}}>
+                <div>
+                    {node.name}
+                </div>
+            </TreeLeaf>
         {/if}
     {/if}
 {/each}
