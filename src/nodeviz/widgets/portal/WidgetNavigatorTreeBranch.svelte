@@ -2,11 +2,11 @@
 {#each nodes as node (node.id) }
     {#if node.parentId == parentId }
         {#if node.name == 'portal'}
-            <TreeBranch rootContent={node.name} onClick={()=>{console.log('click on portal node',node.name + '@' + parentId)}}>
+            <TreeBranch rootContent={node.name} onClick={()=>{onSelect(node.id)}} selected={node.id==$selectedWidgetId}>
                 <WidgetNavigatorTreeBranch {nodes} parentId={node.id}/>
             </TreeBranch>
         {:else}
-            <TreeLeaf onClick={()=>{console.log('clicked on leaf',node.name + '@' + parentId)}}>
+            <TreeLeaf onClick={()=>{onSelect(node.id)}} selected={node.id==$selectedWidgetId}>
                 <div>
                     {node.name}
                 </div>
@@ -17,7 +17,12 @@
 
 
 <script lang="ts">
+	import {selectedWidgetId} from './../stores';
 	import WidgetNavigatorTreeBranch from './WidgetNavigatorTreeBranch.svelte';
-    import { TreeLeaf, TreeBranch } from "nodeviz/components/treeview";
+    import {TreeLeaf, TreeBranch} from "nodeviz/components/treeview";
     export let parentId:string, nodes = [];
+
+    function onSelect(nodeId:string) {
+        selectedWidgetId.set(nodeId !== $selectedWidgetId ? nodeId : '');
+    }
 </script>
