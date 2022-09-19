@@ -66,7 +66,7 @@
 	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
 	
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where } from 'firebase/firestore';
+	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where, getDocs } from 'firebase/firestore';
 	import { browser } from '$app/env';
 	import { db, dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
@@ -95,7 +95,7 @@
 		onSnapshot(query(dbRef, 
 			where('nameSpace', '==', node.value.nameSpace), 
 			where('parentId', '==', node.id),
-			orderBy('createdAt')), (querySnapshot) => {
+			orderBy('index')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
 				portalSnapshot.push({ ...doc.data(), id: doc.id });
@@ -141,6 +141,11 @@
 			(nodeObject as PortalHome).nameSpace = node.value.nameSpace;
 		}
 
+		const childrenCountQuery = query(dbRef, where("parentId", "==", node.id));
+		const querySnapshot = await getDocs(childrenCountQuery);
+		const childrenCount = querySnapshot.size;
+		console.log('children count', childrenCount);
+
 		await addDoc(dbRef, {
 			nameSpace: node.value.nameSpace,
 			parentId: node.id,
@@ -148,7 +153,8 @@
 			name: widgetInfo.name,
 			type: widgetInfo.type,
 			state: {...nodeObject.toJson()},
-			createdAt: new Date()
+			createdAt: new Date(),
+			index: childrenCount
 		});
 	}
 
