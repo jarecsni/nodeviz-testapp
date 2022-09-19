@@ -19,7 +19,8 @@
     const unsubscribe = 
 		browser &&
 		onSnapshot(query(dbRef, 
-			where('nameSpace', '==', nameSpace)),
+			where('nameSpace', '==', nameSpace),
+			orderBy('index')),
 		    (querySnapshot) => {
 			    portalSnapshot = [];
 			    querySnapshot.forEach((doc) => {

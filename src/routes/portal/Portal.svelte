@@ -6,5 +6,5 @@
 	import GenericComponentContainer from '../../nodeviz/GenericComponentContainer.svelte';
     import { PortalHome } from '../../nodeviz/widgets/portal/PortalHome';
     
-    const node = new Node({widgetName: '@nodeviz/portal', value: new PortalHome('PortalTest'), id: 'root'});
+    const node = new Node({widgetName: '@nodeviz/portal', value: new PortalHome('PortalTest'), id: 'root', index: 0});
 </script>

@@ -47,5 +47,5 @@
 			});
 	}
 
-	const node = new Node({widgetName: '@nodeviz/todo', value: new TodoHome()});
+	const node = new Node({widgetName: '@nodeviz/todo', value: new TodoHome(), index: 0});
 </script>

@@ -49,7 +49,7 @@
     let todoDescription;
     let nodes = [];    
     $: {
-        nodes = todos.map(t => new Node({widgetName: '@nodeviz/todoDetails', value: Todo.valueOf(t), id: t.id}));
+        nodes = todos.map((t, index) => new Node({widgetName: '@nodeviz/todoDetails', value: Todo.valueOf(t), id: t.id, index}));
     }
 
     async function addTodo() {

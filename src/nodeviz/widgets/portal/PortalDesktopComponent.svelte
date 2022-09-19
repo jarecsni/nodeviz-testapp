@@ -98,6 +98,7 @@
 			orderBy('index')), (querySnapshot) => {
 			let portalSnapshot = [];
 			querySnapshot.forEach((doc) => {
+				console.log('adding', doc.data().index)
 				portalSnapshot.push({ ...doc.data(), id: doc.id });
 			});
 			portalWidgets = portalSnapshot;
@@ -116,16 +117,18 @@
 			let index = 0;
 			widgetInfoPromises.forEach(widgetInfoPromise => {
 				widgetInfoPromise.then(widgetInfo => {
-					const portalNode = portalWidgets[index++];
+					const portalNode = portalWidgets[index];
 					const value = widgetInfo.getDefaultNodeObject().valueOf(
 						portalNode.state
 					);
 					const qualName = getQualifiedName(widgetInfo);
-					temp.push(new Node({widgetName: qualName, value, id: portalNode.id}));
+					temp.push(new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index}));
+					index++;
 				})
 			});
 		}).then(()=> {
 			nodes = temp;
+			console.log(temp);
 		});
 	}
 
