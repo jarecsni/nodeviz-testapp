@@ -2,7 +2,18 @@
     {#if widget === undefined} 
         <p>Could not retrieve the widget for the type '{node.widgetName}'</p>
     {:else}
-        <div class:selected>
+        <div class:selectedStyle={selected}
+            on:mouseenter={selected ? ()=>{toolbarActive=true} : null} 
+            on:mouseleave={selected ? ()=>{toolbarActive=false} : null}
+        >
+            {#if selected}
+                <div 
+                    class:visibleSyle={toolbarActive}
+                    class:invisibleStyle={!toolbarActive}
+                >
+                    <p>alma</p>     
+                </div>
+            {/if}
             <svelte:component
                 this={widget.desktop.renderer} 
                 {node}
@@ -22,7 +33,7 @@
     export let node:Node<object>;
     export let context:Context;
     let widgetPromise = getWidget(node.widgetName);
-
+    let toolbarActive;
     let selected;
     $: {
         selected = ($selectedWidgetId == node.id);
@@ -30,7 +41,13 @@
 </script>
 
 <style>
-    .selected {
+    .selectedStyle {
         border: 1px dotted;
+    }
+    .visibleSyle {
+        display: inline;
+    }
+    .invisibleStyle {
+        display: none;
     }
 </style>
