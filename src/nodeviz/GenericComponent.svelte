@@ -11,7 +11,16 @@
                     class:visibleSyle={toolbarActive}
                     class:invisibleStyle={!toolbarActive}
                 >
-                    <p>alma</p>     
+                    <div class="toolbar">
+                        <IconButton
+                            class="material-icons"
+                            touch
+                            size="button"
+                            on:click={() => {
+                                
+                            }}>add</IconButton
+                        >
+                    </div>
                 </div>
             {/if}
             <svelte:component
@@ -29,6 +38,7 @@
 	import type {Node} from 'nodeviz/Node';
     import {getWidget} from './widgets/WidgetRegistry';
     import type {Context} from './Context';
+	import IconButton from '@smui/icon-button';
 
     export let node:Node<object>;
     export let context:Context;
@@ -45,9 +55,16 @@
         border: 1px dotted;
     }
     .visibleSyle {
-        display: inline;
+        display: inline-block;
+        position: absolute;
+        z-index: 100;
     }
     .invisibleStyle {
         display: none;
+    }
+    .toolbar {
+        width: 100%;
+        height: 40px;
+        background: lightgray;
     }
 </style>
