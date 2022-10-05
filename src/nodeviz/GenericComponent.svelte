@@ -2,7 +2,7 @@
     {#if widget === undefined} 
         <p>Could not retrieve the widget for the type '{node.widgetName}'</p>
     {:else}
-        <div class:selectedStyle={selected}
+        <div style="position:relative;" class:selectedStyle={selected}
             on:mouseenter={selected ? ()=>{toolbarActive=true} : null} 
             on:mouseleave={selected ? ()=>{toolbarActive=false} : null}
         >
@@ -12,14 +12,17 @@
                     class:invisibleStyle={!toolbarActive}
                 >
                     <div class="toolbar">
-                        <IconButton
-                            class="material-icons"
-                            touch
-                            size="button"
-                            on:click={() => {
-                                
-                            }}>add</IconButton
-                        >
+                        <Wrapper>    
+                            <IconButton
+                                class="material-icons"
+                                touch
+                                size="button"
+                                on:click={() => {
+                                    
+                                }}>delete</IconButton
+                            >
+                            <Tooltip yPos="above">Remove</Tooltip>
+                        </Wrapper>
                     </div>
                 </div>
             {/if}
@@ -39,6 +42,7 @@
     import {getWidget} from './widgets/WidgetRegistry';
     import type {Context} from './Context';
 	import IconButton from '@smui/icon-button';
+    import Tooltip, {Wrapper} from '@smui/tooltip';
 
     export let node:Node<object>;
     export let context:Context;
@@ -58,12 +62,12 @@
         display: inline-block;
         position: absolute;
         z-index: 100;
+        top: 0; bottom: 0; right: 0;
     }
     .invisibleStyle {
         display: none;
     }
     .toolbar {
-        width: 100%;
         height: 40px;
         background: lightgray;
     }
