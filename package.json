@@ -69,6 +69,7 @@
     "@smui/paper": "^6.0.0-beta.16",
     "@smui/switch": "^6.0.0-beta.16",
     "@smui/textfield": "^6.0.0-beta.16",
+    "@smui/tooltip": "^6.1.4",
     "@storybook/addon-svelte-csf": "^2.0.4",
     "firebase": "^9.8.4",
     "invertly": "^1.0.0",
