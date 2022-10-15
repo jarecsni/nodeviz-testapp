@@ -96,15 +96,15 @@
 			where('nameSpace', '==', node.value.nameSpace), 
 			where('parentId', '==', node.id),
 			orderBy('index')), (querySnapshot) => {
-			let portalSnapshot = [];
-			querySnapshot.forEach((doc) => {
-				console.log('adding', doc.data().index)
-				portalSnapshot.push({ ...doc.data(), id: doc.id });
-			});
-			portalWidgets = portalSnapshot;
-			loadingData = false;
-		});
-
+				let portalSnapshot = [];
+				querySnapshot.forEach((doc) => {
+					console.log('adding', doc.data().index)
+					portalSnapshot.push({ ...doc.data(), id: doc.id });
+				});
+				portalWidgets = portalSnapshot;
+				loadingData = false;
+			}
+		);
 	let nodes, temp;
 	$: {
 		const widgetInfoPromises = [];
