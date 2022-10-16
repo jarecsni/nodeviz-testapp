@@ -1,3 +1,4 @@
+import { FirebaseAccess } from './persistence/firebase/FirebaseAccess';
 
 export class PersistenceService {
     private static instance: PersistenceService;
@@ -9,5 +10,9 @@ export class PersistenceService {
     }
     private constructor() {
 
+    }
+    public getDataAccessObjectFor(collection: string) {
+        // TODO this can be made configurable - not urgent though
+        return new FirebaseAccess(collection);
     }
 }

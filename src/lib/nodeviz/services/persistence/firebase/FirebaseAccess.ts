@@ -1,11 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, CollectionReference, type DocumentData, doc, updateDoc, addDoc, deleteDoc, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import type { WhereFilterOp } from 'firebase/firestore';
-import type { PersistenceAccess } from '../../PersistenceAccess';
+import type { PersistenceAccess, WhereClause } from '../../PersistenceAccess';
 import firebaseConfig from './config.json'
 
 
-class FirebaseAccess implements PersistenceAccess {
+export class FirebaseAccess implements PersistenceAccess {
     static app = initializeApp(firebaseConfig);
     static db = getFirestore(FirebaseAccess.app);
     dbRef:CollectionReference<DocumentData>;
@@ -26,13 +26,15 @@ class FirebaseAccess implements PersistenceAccess {
     delete(id: string): Promise<void> {
         return deleteDoc(doc(FirebaseAccess.db, this.collectionName, id));
     }
-    select(callback: (data: object[]) => void, clauses: string[][], order?: string): void {
+    select(callback: (data: object[]) => void, clauses: WhereClause[], order?: string): void {
         let whereClauses = [];
         clauses.forEach(clause => {
-            whereClauses.push(where(clause[0], (clause[1] as WhereFilterOp), clause[2]));
+            whereClauses.push(where(clause.field, (clause.op as WhereFilterOp), clause.value));
         })
-        let orderByFn = order && orderBy(order);
-        onSnapshot(query(this.dbRef, ...whereClauses, orderByFn), (querySnapshot) => {
+        let queryFn = order ? 
+            query(this.dbRef, ...whereClauses, orderBy(order)) : 
+            query(this.dbRef, ...whereClauses);
+        onSnapshot(queryFn, (querySnapshot) => {
 				let objects = [];
 				querySnapshot.forEach((doc) => {
 					objects.push({ ...doc.data(), id: doc.id });
