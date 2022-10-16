@@ -35,7 +35,7 @@
     const todoAccess = PersistenceService.getInstance().getDataAccessObjectFor('todo');
     let todos = [];
 	const unsubscribe =
-		browser && todoAccess.select((todoObjs) => {todos = todoObjs}, [], '')    
+		browser && todoAccess.select((todoObjs) => {todos = todoObjs}, [])    
     
     let todoDescription;
     let nodes = [];    
