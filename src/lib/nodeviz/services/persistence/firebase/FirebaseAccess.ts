@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, CollectionReference, type DocumentData, doc, updateDoc, addDoc, deleteDoc, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { getFirestore, collection, CollectionReference, type DocumentData, doc, updateDoc, addDoc, deleteDoc, onSnapshot, orderBy, query, where, getDocs } from "firebase/firestore";
 import type { WhereFilterOp } from 'firebase/firestore';
 import type { PersistenceAccess, WhereClause } from '../../PersistenceAccess';
 import firebaseConfig from './config.json'
@@ -42,5 +42,14 @@ export class FirebaseAccess implements PersistenceAccess {
 				callback(objects);
 			}
 		);
+    }
+    async count(clauses: WhereClause[]): Promise<number> {
+        let whereClauses = [];
+        clauses.forEach(clause => {
+            whereClauses.push(where(clause.field, (clause.op as WhereFilterOp), clause.value));
+        })
+        let queryFn = query(this.dbRef, ...whereClauses);
+        let countPromise = await getDocs(queryFn);
+        return countPromise.size;
     }
 }

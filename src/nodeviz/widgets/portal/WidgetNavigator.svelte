@@ -11,23 +11,20 @@
     import { TreeBranch, TreeView } from "nodeviz/components/treeview";
 	import { onSnapshot, doc, query, orderBy, where } from 'firebase/firestore';
 	import { browser } from '$app/env';
-	import { dbRef } from './firebase';
+	import { PersistenceService } from '$lib/nodeviz/services/PersistenceService';
+
+    const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
 
     export let nameSpace:string;
 
     let portalSnapshot, nodes;
-    const unsubscribe = 
-		browser &&
-		onSnapshot(query(dbRef, 
-			where('nameSpace', '==', nameSpace),
-			orderBy('index')),
-		    (querySnapshot) => {
-			    portalSnapshot = [];
-			    querySnapshot.forEach((doc) => {
-				    portalSnapshot.push({ ...doc.data(), id: doc.id });
-                });
-                nodes = portalSnapshot;
-            });
+
+	portalAccess.select((portalObjs) => {nodes = portalObjs}, 
+		[
+			{field: 'nameSpace', op: '==', value: nameSpace}
+		],
+		'index'
+	);
 </script>
 
 <style>

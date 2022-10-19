@@ -68,12 +68,14 @@
 	import { Node } from 'nodeviz/Node';
 	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where, getDocs } from 'firebase/firestore';
 	import { browser } from '$app/env';
-	import { db, dbRef } from './firebase';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
 	import { getQualifiedName, type NodeObject, type WidgetInfo, type WidgetManifest } from '../Widget';
 	import type { PortalHome } from './PortalHome';
+	import { PersistenceService } from '$lib/nodeviz/services/PersistenceService';
+
+    const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
 
 	export let node:Node<PortalHome>;
 
@@ -90,21 +92,15 @@
 
 	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string};
 	let portalWidgets = [];
-	const unsubscribe = 
-		browser &&
-		onSnapshot(query(dbRef, 
-			where('nameSpace', '==', node.value.nameSpace), 
-			where('parentId', '==', node.id),
-			orderBy('index')), (querySnapshot) => {
-				let portalSnapshot = [];
-				querySnapshot.forEach((doc) => {
-					console.log('adding', doc.data().index)
-					portalSnapshot.push({ ...doc.data(), id: doc.id });
-				});
-				portalWidgets = portalSnapshot;
-				loadingData = false;
-			}
-		);
+	
+	portalAccess.select((portalObjs) => {portalWidgets = portalObjs}, 
+		[
+			{field: 'nameSpace', op: '==', value: node.value.nameSpace},
+			{field: 'parentId', op: '==', value: node.id}
+		],
+		'index'
+	);
+
 	let nodes, temp;
 	$: {
 		const widgetInfoPromises = [];
@@ -144,12 +140,10 @@
 			(nodeObject as PortalHome).nameSpace = node.value.nameSpace;
 		}
 
-		const childrenCountQuery = query(dbRef, where("parentId", "==", node.id));
-		const querySnapshot = await getDocs(childrenCountQuery);
-		const childrenCount = querySnapshot.size;
+		const childrenCount = await portalAccess.count([{field:'parentId', op: '==', value:node.id}]);
 		console.log('children count', childrenCount);
 
-		await addDoc(dbRef, {
+		portalAccess.insert({
 			nameSpace: node.value.nameSpace,
 			parentId: node.id,
 			package: widgetInfo.package,
@@ -162,7 +156,7 @@
 	}
 
 	async function portalNodeUpdated(node:CustomEvent<Node<NodeObject>>) {
-		await updateDoc(doc(db, 'portal', node.detail.id), {
+		portalAccess.update(node.detail.id, {
 			state: {...node.detail.value.toJson()}
 		});
 	}

@@ -11,4 +11,5 @@ export interface PersistenceAccess {
     insert(obj:object): Promise<unknown>
     delete(id:string): Promise<void>
     select(callback: (data:object[]) => void, clauses:WhereClause[], orderBy:string): void
+    count(clauses:WhereClause[]): Promise<number>
 }
