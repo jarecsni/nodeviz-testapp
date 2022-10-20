@@ -66,8 +66,6 @@
 	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
 	
 	import { Node } from 'nodeviz/Node';
-	import { onSnapshot, addDoc, updateDoc, doc, query, orderBy, where, getDocs } from 'firebase/firestore';
-	import { browser } from '$app/env';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
 	import WidgetDetails from './WidgetDetails.svelte';
@@ -90,7 +88,6 @@
 		selectedWidgetManifest = widgets[0];
 	});
 
-	let loadingData = true, portalNode:{id:string,state:unknown,type:string,name:string};
 	let portalWidgets = [];
 	
 	portalAccess.select((portalObjs) => {portalWidgets = portalObjs}, 
