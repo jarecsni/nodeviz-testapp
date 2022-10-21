@@ -21,7 +21,15 @@
                                     
                                 }}>delete</IconButton
                             >
-                            <Tooltip yPos="above">Remove</Tooltip>
+                            <IconButton
+                                class="material-icons"
+                                touch
+                                size="button"
+                                on:click={() => {
+                                    openSettingsDialogue()
+                                }}>settings</IconButton
+                            >
+                            <Tooltip yPos="above">Settings</Tooltip>
                         </Wrapper>
                     </div>
                 </div>
@@ -43,6 +51,8 @@
     import type {Context} from './Context';
 	import IconButton from '@smui/icon-button';
     import Tooltip, {Wrapper} from '@smui/tooltip';
+    import PropertyEditor, { propertyTypes } from '../lib/nodeviz/common/property-editor/PropertyEditor.svelte';
+
 
     export let node:Node<object>;
     export let context:Context;
@@ -51,6 +61,10 @@
     let selected;
     $: {
         selected = ($selectedWidgetId == node.id);
+    }
+
+    function openSettingsDialogue() {
+
     }
 </script>
 
