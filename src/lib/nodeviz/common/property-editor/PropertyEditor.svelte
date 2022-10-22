@@ -39,13 +39,14 @@
 </script>
 
 <script lang="ts">
-	export let obj;
+	export let obj:PropertiesObject;
 	import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 	import NumberEditor from './editors/NumberEditor.svelte';
 	import StringEditor from './editors/StringEditor.svelte';
 	import DateEditor from './editors/DateEditor.svelte';
 	import BooleanEditor from './editors/BooleanEditor.svelte';
+	import type { PropertiesObject } from './PropertyEditorTypes';
 	const editorsByType = {
 		Number: NumberEditor,
 		String: StringEditor,
@@ -77,6 +78,7 @@
             ]
         }
     */
+
 	const {sections} = obj;
 	const editors = {};
 	sections.forEach(section => {

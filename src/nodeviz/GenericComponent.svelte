@@ -53,7 +53,6 @@
     import Tooltip, {Wrapper} from '@smui/tooltip';
     import PropertyEditor, { propertyTypes } from '../lib/nodeviz/common/property-editor/PropertyEditor.svelte';
 
-
     export let node:Node<object>;
     export let context:Context;
     let widgetPromise = getWidget(node.widgetName);
