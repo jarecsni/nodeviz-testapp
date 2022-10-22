@@ -9,5 +9,6 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     desktop: {
         renderer: DetailsDesktopComponent
     },
-    getDefaultNodeObject: () => (new Todo(''))
+    getDefaultNodeObject: () => (new Todo('')),
+    getPropertiesObject: () => (null)
 });
