@@ -3,37 +3,36 @@
         class="material-icons" 
         slot="trailingIcon" 
         size="button"
-        on:click={()=>{surface.setOpen(true);}}
+        on:click={()=>{editorOpen=true}}
     >
         more_horiz
     </IconButton>   
 </Textfield>
 <div class="surface-wrapper">
-  <MenuSurface bind:this={surface} anchorCorner="BOTTOM_LEFT">
+  <Dialog bind:open={editorOpen}>
     <Paper>
       <Title>Edit</Title>
       <Content>
         <div class="string-editor-content">
           <Textfield textarea bind:value={value} autofocus />
-          <Button on:click={()=>surface.setOpen(false)}><Label>Close</Label></Button>
+          <Button on:click={()=>(editorOpen=false)}><Label>Close</Label></Button>
         </div>
       </Content>
     </Paper>
-  </MenuSurface>
+  </Dialog>
 </div> 
 
 
 <script lang="ts">
 	  import Textfield from '@smui/textfield';
     import IconButton from '@smui/icon-button';
-    import type { MenuSurfaceComponentDev } from '@smui/menu-surface';
-    import MenuSurface from '@smui/menu-surface';
     import Paper, { Title, Subtitle, Content } from '@smui/paper';
     import Button, {Label} from '@smui/button';
     import './StringEditor.global.scss';
+	  import Dialog from '@smui/dialog';
 
     export let value;
-    let surface: MenuSurfaceComponentDev;
+    let editorOpen: boolean;
 </script>
 
 <style>
