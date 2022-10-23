@@ -78,7 +78,6 @@
 	export let node:Node<PortalHome>;
 
 	let addDialogueOpen = false;
-
 	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest:WidgetManifest;
 	getWidgetManifests().then((_widgets) => {
 		widgets = _widgets.map(widget => ({
@@ -115,7 +114,9 @@
 						portalNode.state
 					);
 					const qualName = getQualifiedName(widgetInfo);
-					temp.push(new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index}));
+					const newNode = new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index});
+					newNode.config = widgetInfo.getPropertiesObject();
+					temp.push(newNode);
 					index++;
 				})
 			});
