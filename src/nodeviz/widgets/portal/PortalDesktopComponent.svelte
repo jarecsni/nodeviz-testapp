@@ -114,7 +114,8 @@
 						portalNode.state
 					);
 					const qualName = getQualifiedName(widgetInfo);
-					const newNode = new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index});
+					const nodeHandler = widgetInfo.getNodeHandler && widgetInfo.getNodeHandler();
+					const newNode = new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index, handler: nodeHandler});
 					newNode.config = widgetInfo.getPropertiesObject();
 					temp.push(newNode);
 					index++;

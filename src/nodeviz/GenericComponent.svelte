@@ -45,19 +45,22 @@
         </div>
         
         {#if node.config}
-        <Dialog bind:open={configureNodeDialogueOpen}>
-            <Title>Node Properties</Title>
-            <Content>
-                <div class="dialogueContent">
-                    <PropertyEditor obj={configObject}/>
-                </div>
-            </Content>
-            <Actions>
-                <Button>
-                    <Label>Close</Label>
-                </Button>
-            </Actions>
-        </Dialog>    
+            <Dialog bind:open={configureNodeDialogueOpen}>
+                <Title>Node Properties</Title>
+                <Content>
+                    <div class="dialogueContent">
+                        <PropertyEditor obj={configObject}/>
+                    </div>
+                </Content>
+                <Actions>
+                    <Button>
+                        <Label>Cancel</Label>
+                    </Button>
+                    <Button on:click{doSaveConfig}>
+                        <Label>Save</Label>
+                    </Button>
+                </Actions>
+            </Dialog>    
         {/if}
         
     {/if}
@@ -92,6 +95,9 @@
 
     function openSettingsDialogue() {
         configureNodeDialogueOpen = true;
+    }
+    function doSaveConfig() {
+        
     }
 </script>
 

@@ -1,6 +1,6 @@
 
 import type { PropertiesObject } from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
-import type { Node } from 'nodeviz/Node';
+import type { Node, NodeHandler } from 'nodeviz/Node';
 import type {SvelteComponent} from 'svelte';
 
 export interface Widget {
@@ -29,6 +29,7 @@ export interface WidgetInfo {
     widgets?: string[]
     getDefaultNodeObject: () => NodeObject
     getPropertiesObject: () => PropertiesObject
+    getNodeHandler?: () => NodeHandler<object>
 }
 
 export interface WidgetManifest {

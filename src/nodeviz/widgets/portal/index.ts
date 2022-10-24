@@ -3,6 +3,7 @@ import { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
 import PortalDesktopComponent from './PortalDesktopComponent.svelte';
 import { PortalHome } from './PortalHome';
+import { NodeHandlerImpl } from './NodeHandlerImpl'
 
 export const getWidgetInfo:()=>WidgetInfo = () => ({
     package: 'nodeviz',
@@ -12,7 +13,8 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
         renderer: PortalDesktopComponent
     },
     getDefaultNodeObject: () => (new PortalHome('')),
-    getPropertiesObject: () => (getNewPropertiesObject())
+    getPropertiesObject: () => (getNewPropertiesObject()),
+    getNodeHandler: () => (new NodeHandlerImpl())
 });
 
 const getNewPropertiesObject = () => {
