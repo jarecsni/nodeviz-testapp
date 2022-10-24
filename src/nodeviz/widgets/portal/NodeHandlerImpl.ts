@@ -15,7 +15,7 @@ export class NodeHandlerImpl implements NodeHandler<object> {
             result.push({
                 iconName: 'settings',
                 tooltip: 'Settings',
-                callback: () => { console.log('settings called called'); }
+                callback: () => { console.log('settings called'); }
             });
         }
         return result;

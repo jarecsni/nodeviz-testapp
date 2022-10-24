@@ -13,25 +13,17 @@
                 >
                     <div class="toolbar">
                         <Wrapper>    
-                            <IconButton
-                                class="material-icons"
-                                touch
-                                size="button"
-                                on:click={() => {
-                                    
-                                }}>delete</IconButton
-                            >
-                            {#if node.config}
+                            {#each managementActions as action}
                                 <IconButton
                                     class="material-icons"
                                     touch
                                     size="button"
-                                    on:click={() => {
-                                        openSettingsDialogue()
-                                    }}>settings</IconButton
-                                >    
-                            {/if}
-                            <Tooltip yPos="above">Settings</Tooltip>
+                                    on:click={()=>{action.callback(node)}}>{action.iconName}</IconButton
+                                >
+                                {#if action.tooltip}
+                                    <Tooltip yPos="above">{action.tooltip}</Tooltip>
+                                {/if}
+                            {/each}
                         </Wrapper>
                     </div>
                 </div>
@@ -68,7 +60,6 @@
 
 <script type="typescript">
 	import {selectedWidgetId} from './widgets/stores';
-	import type {Node} from 'nodeviz/Node';
     import {getWidget} from './widgets/WidgetRegistry';
     import type {Context} from './Context';
     import Dialog, { Title, Content, Actions } from '@smui/dialog';
@@ -77,10 +68,12 @@
     import Tooltip, {Wrapper} from '@smui/tooltip';
     import PropertyEditor from '../lib/nodeviz/common/property-editor/PropertyEditor.svelte';
     import type {PropertiesObject} from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
-	
+	import type { Node } from 'nodeviz/Node';
 
     export let node:Node<object>;
     export let context:Context;
+
+    const managementActions = node.getHandler().getManagementActions(node);
 
     const configObject:PropertiesObject = node.config as PropertiesObject;
 
