@@ -94,9 +94,10 @@
     import type {PropertiesObject} from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
 
 	export let node:Node<PortalHome>;
+		console.log('****', node.id, node.config);
 
     const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
-	const configObject:PropertiesObject = node.config as PropertiesObject;
+	let configObject:PropertiesObject = node.config as PropertiesObject;
 
 	let configureNodeDialogueOpen = false;
 
@@ -121,8 +122,9 @@
 	);
 
 	const handleAction = (action:string, node:Node<object>) => {
-		console.log('Action=', action);
+		console.log('Action=', action, node.id);
 		if (action === 'openSettingsDialogue') {
+			configObject = node.config;
 			console.log('activating dialgoue')
 			console.log('node id', node.id);
 			console.log('node.config?', node.config)
