@@ -2,6 +2,8 @@
 	{#if node.id == 'root'}
 		<WidgetNavigator nameSpace={node.value.nameSpace}/>
 	{/if}
+	{node.id}
+	{!!node.config}
 
 	<IconButton
 		class="material-icons"
@@ -94,10 +96,12 @@
     import type {PropertiesObject} from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
 
 	export let node:Node<PortalHome>;
-		console.log('****', node.id, node.config);
 
     const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
 	let configObject:PropertiesObject = node.config as PropertiesObject;
+
+	console.log('>>>****', node.id, configObject);
+
 
 	let configureNodeDialogueOpen = false;
 
@@ -124,7 +128,7 @@
 	const handleAction = (action:string, node:Node<object>) => {
 		console.log('Action=', action, node.id);
 		if (action === 'openSettingsDialogue') {
-			configObject = node.config;
+			//configObject = node.config as PropertiesObject;
 			console.log('activating dialgoue')
 			console.log('node id', node.id);
 			console.log('node.config?', node.config)
@@ -152,6 +156,8 @@
 					const nodeHandler = widgetInfo.getNodeHandler && widgetInfo.getNodeHandler(handleAction);
 					const newNode = new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index, handler: nodeHandler});
 					newNode.config = widgetInfo.getPropertiesObject();
+
+					// handle action needs to be created here closing over the new node object!
 					temp.push(newNode);
 					index++;
 				})
