@@ -34,27 +34,7 @@
                 {context}
                 on:nodeUpdated
             />
-        </div>
-        
-        {#if node.config}
-            <Dialog bind:open={configureNodeDialogueOpen}>
-                <Title>Node Properties</Title>
-                <Content>
-                    <div class="dialogueContent">
-                        <PropertyEditor obj={configObject}/>
-                    </div>
-                </Content>
-                <Actions>
-                    <Button>
-                        <Label>Cancel</Label>
-                    </Button>
-                    <Button on:click{doSaveConfig}>
-                        <Label>Save</Label>
-                    </Button>
-                </Actions>
-            </Dialog>    
-        {/if}
-        
+        </div>        
     {/if}
 {/await}
 
@@ -62,12 +42,8 @@
 	import {selectedWidgetId} from './widgets/stores';
     import {getWidget} from './widgets/WidgetRegistry';
     import type {Context} from './Context';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Button, { Label } from '@smui/button';
 	import IconButton from '@smui/icon-button';
     import Tooltip, {Wrapper} from '@smui/tooltip';
-    import PropertyEditor from '../lib/nodeviz/common/property-editor/PropertyEditor.svelte';
-    import type {PropertiesObject} from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
 	import type { Node } from 'nodeviz/Node';
 
     export let node:Node<object>;
@@ -75,22 +51,11 @@
 
     const managementActions = node.getHandler().getManagementActions(node);
 
-    const configObject:PropertiesObject = node.config as PropertiesObject;
-
-    let configureNodeDialogueOpen = false;
-
     let widgetPromise = getWidget(node.widgetName);
     let toolbarActive;
     let selected;
     $: {
         selected = ($selectedWidgetId == node.id);
-    }
-
-    function openSettingsDialogue() {
-        configureNodeDialogueOpen = true;
-    }
-    function doSaveConfig() {
-        
     }
 </script>
 

@@ -1,5 +1,5 @@
 import { PropertiesObjectImpl } from '$lib/nodeviz/common/property-editor/PropertiesObjectImpl';
-import { Node } from 'nodeviz/Node';
+import type { Node } from 'nodeviz/Node';
 import type {WidgetInfo} from '../Widget';
 import PortalDesktopComponent from './PortalDesktopComponent.svelte';
 import { PortalHome } from './PortalHome';
@@ -14,7 +14,7 @@ export const getWidgetInfo:()=>WidgetInfo = () => ({
     },
     getDefaultNodeObject: () => (new PortalHome('')),
     getPropertiesObject: () => (getNewPropertiesObject()),
-    getNodeHandler: () => (new NodeHandlerImpl())
+    getNodeHandler: (actionHandler: (action:string, node:Node<object>) => void) => (new NodeHandlerImpl(actionHandler))
 });
 
 const getNewPropertiesObject = () => {

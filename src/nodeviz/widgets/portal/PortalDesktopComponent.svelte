@@ -48,6 +48,25 @@
 		</Actions>
 	</Dialog>
 
+	<Dialog bind:open={configureNodeDialogueOpen}>
+		<Title>Node Properties</Title>
+		<Content>
+			<div class="dialogueContent">
+				{#if configObject}
+					<PropertyEditor obj={configObject}/>
+				{/if}
+			</div>
+		</Content>
+		<Actions>
+			<Button>
+				<Label>Cancel</Label>
+			</Button>
+			<Button on:click{doSaveConfig}>
+				<Label>Save</Label>
+			</Button>
+		</Actions>
+	</Dialog>    
+	
 	<div class="portalContainer">
 		{#each nodes as node (node.id)}
 			<div>
@@ -64,7 +83,6 @@
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
-	
 	import { Node } from 'nodeviz/Node';
 	import GenericComponentContainer from '../../GenericComponentContainer.svelte';
 	import { getWidget, getWidgetManifests } from '../WidgetRegistry';
@@ -72,10 +90,15 @@
 	import { getQualifiedName, type NodeObject, type WidgetInfo, type WidgetManifest } from '../Widget';
 	import type { PortalHome } from './PortalHome';
 	import { PersistenceService } from '$lib/nodeviz/services/PersistenceService';
-
-    const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
+	import PropertyEditor from '$lib/nodeviz/common/property-editor/PropertyEditor.svelte';
+    import type {PropertiesObject} from '$lib/nodeviz/common/property-editor/PropertyEditorTypes';
 
 	export let node:Node<PortalHome>;
+
+    const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
+	const configObject:PropertiesObject = node.config as PropertiesObject;
+
+	let configureNodeDialogueOpen = false;
 
 	let addDialogueOpen = false;
 	let widgets = [], widgetSelectionIndex = 0, selectedWidgetManifest:WidgetManifest;
@@ -97,6 +120,16 @@
 		'index'
 	);
 
+	const handleAction = (action:string, node:Node<object>) => {
+		console.log('Action=', action);
+		if (action === 'openSettingsDialogue') {
+			console.log('activating dialgoue')
+			console.log('node id', node.id);
+			console.log('node.config?', node.config)
+			configureNodeDialogueOpen = true;
+		}
+	}
+
 	let nodes, temp;
 	$: {
 		const widgetInfoPromises = [];
@@ -114,7 +147,7 @@
 						portalNode.state
 					);
 					const qualName = getQualifiedName(widgetInfo);
-					const nodeHandler = widgetInfo.getNodeHandler && widgetInfo.getNodeHandler();
+					const nodeHandler = widgetInfo.getNodeHandler && widgetInfo.getNodeHandler(handleAction);
 					const newNode = new Node({widgetName: qualName, value, id: portalNode.id, index:portalWidgets[index].index, handler: nodeHandler});
 					newNode.config = widgetInfo.getPropertiesObject();
 					temp.push(newNode);
@@ -159,6 +192,14 @@
 			state: {...node.detail.value.toJson()}
 		});
 	}
+
+	function openSettingsDialogue() {
+        configureNodeDialogueOpen = true;
+    }
+    function doSaveConfig() {
+        
+    }
+
 
 </script>
 

@@ -29,7 +29,7 @@ export interface WidgetInfo {
     widgets?: string[]
     getDefaultNodeObject: () => NodeObject
     getPropertiesObject: () => PropertiesObject
-    getNodeHandler?: () => NodeHandler<object>
+    getNodeHandler?: (actionHandler: (action:string, node:Node<object>) => void) => NodeHandler<object>
 }
 
 export interface WidgetManifest {
