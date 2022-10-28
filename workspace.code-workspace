@@ -8,5 +8,6 @@
 		}
 	],
 	"settings": {
+		"todo-tree.tree.scanMode": "current file"
 	}
 }
