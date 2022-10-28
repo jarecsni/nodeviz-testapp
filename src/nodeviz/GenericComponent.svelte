@@ -49,7 +49,7 @@
     export let node:Node<object>;
     export let context:Context;
 
-    const managementActions = node.getHandler().getManagementActions(node);
+    const managementActions = node.handler.getManagementActions(node);
 
     let widgetPromise = getWidget(node.widgetName);
     let toolbarActive;

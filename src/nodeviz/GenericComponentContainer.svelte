@@ -43,7 +43,7 @@
             });
         }
         isVisible(_node: Node<object>) {
-            return _node.getHandler().isVisible(_node);
+            return _node.handler.isVisible(_node);
         }
     }
     const context = new ContextImpl();
