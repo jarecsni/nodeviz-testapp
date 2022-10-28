@@ -2,9 +2,6 @@
 	{#if node.id == 'root'}
 		<WidgetNavigator nameSpace={node.value.nameSpace}/>
 	{/if}
-	{node.id}
-	{!!node.config}
-
 	<IconButton
 		class="material-icons"
 		touch
@@ -128,10 +125,7 @@
 	const handleAction = (action:string, node:Node<object>) => {
 		console.log('Action=', action, node.id);
 		if (action === 'openSettingsDialogue') {
-			//configObject = node.config as PropertiesObject;
-			console.log('activating dialgoue')
-			console.log('node id', node.id);
-			console.log('node.config?', node.config)
+			configObject = node.config as PropertiesObject;
 			configureNodeDialogueOpen = true;
 		}
 	}
