@@ -19,6 +19,7 @@
 									<svelte:component 
 										this={editors[property]}
 										value={section.properties[property].value}
+										displayName={section.properties[property].displayName}
 									/>
 								</Cell>
                                 <Cell>{section.properties[property].description}</Cell>

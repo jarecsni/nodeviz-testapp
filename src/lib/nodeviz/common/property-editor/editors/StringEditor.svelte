@@ -11,7 +11,7 @@
 <div class="surface-wrapper">
   <Dialog bind:open={editorOpen}>
     <Paper>
-      <Title>Edit</Title>
+      <Title>{displayName}</Title>
       <Content>
         <div class="string-editor-content">
           <Textfield textarea bind:value={value} autofocus />
@@ -31,7 +31,7 @@
     import './StringEditor.global.scss';
 	  import Dialog from '@smui/dialog';
 
-    export let value;
+    export let value, displayName;
     let editorOpen: boolean;
 </script>
 
