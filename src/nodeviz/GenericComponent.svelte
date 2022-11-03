@@ -20,9 +20,7 @@
                                     size="button"
                                     on:click={()=>{action.callback(node)}}>{action.iconName}</IconButton
                                 >
-                                {#if action.tooltip}
-                                    <Tooltip yPos="above">{action.tooltip}</Tooltip>
-                                {/if}
+                                <Tooltip yPos="above">{action.tooltip}</Tooltip>
                             {/each}
                         </Wrapper>
                     </div>
@@ -45,11 +43,23 @@
 	import IconButton from '@smui/icon-button';
     import Tooltip, {Wrapper} from '@smui/tooltip';
 	import type { Node } from 'nodeviz/Node';
+    import { PersistenceService } from '$lib/nodeviz/services/PersistenceService';
+	
+    const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
 
     export let node:Node<object>;
     export let context:Context;
 
-    const managementActions = node.handler.getManagementActions(node);
+    const managementActions = [
+        ...node.handler.getManagementActions(node),
+        {
+            iconName: 'delete',
+            tooltip: 'Delete',
+            callback: () => { 
+                portalAccess.delete(node.id);
+            }
+        },
+    ];
 
     let widgetPromise = getWidget(node.widgetName);
     let toolbarActive;
@@ -66,7 +76,7 @@
     .visibleSyle {
         display: inline-block;
         position: absolute;
-        z-index: 100;
+        z-index: 1000;
         top: 0; bottom: 0; right: 0;
     }
     .invisibleStyle {
@@ -75,5 +85,6 @@
     .toolbar {
         height: 40px;
         background: lightgray;
+        display: flex;
     }
 </style>

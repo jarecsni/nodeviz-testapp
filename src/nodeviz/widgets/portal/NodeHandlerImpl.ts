@@ -11,17 +11,11 @@ export class NodeHandlerImpl implements NodeHandler<object> {
     getManagementActions(node: Node<object>): ManagementAction<object>[] {
         const result:ManagementAction<object>[] = [
             {
-                iconName: 'delete',
-                callback: () => { this._handleAction('deleteNode', node) }
+                iconName: 'settings',
+                tooltip: 'Settings blah blah blah',
+                callback: () => { this._handleAction('openSettingsDialogue', node) }
             }
         ];
-        if (node.config) {
-            result.push({
-                iconName: 'settings',
-                tooltip: 'Settings',
-                callback: () => { this._handleAction('openSettingsDialogue', node) }
-            });
-        }
         return result;
     }
 }

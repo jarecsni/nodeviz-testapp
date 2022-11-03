@@ -97,9 +97,6 @@
     const portalAccess = PersistenceService.getInstance().getDataAccessObjectFor('portal');
 	let configObject:PropertiesObject = node.config as PropertiesObject;
 
-	console.log('>>>****', node.id, configObject);
-
-
 	let configureNodeDialogueOpen = false;
 
 	let addDialogueOpen = false;
