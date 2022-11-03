@@ -20,7 +20,7 @@
                                     size="button"
                                     on:click={()=>{action.callback(node)}}>{action.iconName}</IconButton
                                 >
-                                <Tooltip yPos="above">{action.tooltip}</Tooltip>
+                                <!-- <Tooltip yPos="above">{action.tooltip}</Tooltip> -->
                             {/each}
                         </Wrapper>
                     </div>
