@@ -11,6 +11,9 @@
 		}
 	],
 	"settings": {
-		"todo-tree.tree.scanMode": "current file"
+		"todo-tree.tree.scanMode": "current file",
+		"jest.disabledWorkspaceFolders": [
+			"beantree"
+		]
 	}
 }
