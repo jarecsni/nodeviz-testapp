@@ -10,5 +10,9 @@
 			"path": "../beantree"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"jest.disabledWorkspaceFolders": [
+			"beantree"
+		]
+	}
 }
