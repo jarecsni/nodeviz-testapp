@@ -12,7 +12,8 @@
 	],
 	"settings": {
 		"jest.disabledWorkspaceFolders": [
-			"beantree"
+			"beantree",
+			"nodeviz-testapp"
 		]
 	}
 }
